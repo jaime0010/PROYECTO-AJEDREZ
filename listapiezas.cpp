@@ -51,3 +51,60 @@ int listapiezas::donde_esta(Vector2D a)
     return numero_p;
   
 }
+void listapiezas::destruir(int i)
+{
+    if (y_fuera > 8)
+    {
+        x_fuera = 10;
+        y_fuera = 1;
+    }
+    lista_piezas[i]->posicion.x=x_fuera;
+    lista_piezas[i]->posicion.y = y_fuera;
+    y_fuera++;
+}
+bool listapiezas::es_blanca(int i)
+{
+    if (lista_piezas[i]->color == 255)
+        return true;
+    else
+        return false;
+  
+}
+bool listapiezas::validar_peon(Vector2D a,int i)
+{
+    if (lista_piezas[i]->color == 255)//es blanca
+    {
+        if (a.x - lista_piezas[i]->posicion.x == 0)//que no se mueva en la X
+        {
+            int dist = a.y - lista_piezas[i]->posicion.y;//vemos cuanto se mueve
+
+            if (dist < 3 && lista_piezas[i]->posicion.y == 2)//se comprueba si es primer movimiento con posicion
+                return true;
+            else if (dist == 1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+
+        
+    }
+    else if (lista_piezas[i]->color == 0)//es negra
+    {
+        if (a.x - lista_piezas[i]->posicion.x == 0)//que no se mueva en la X
+        {
+            int dist = lista_piezas[i]->posicion.y-a.y;//vemos cuanto se mueve
+            if (dist < 3 && lista_piezas[i]->posicion.y == 7)
+                return true;
+            else if (dist == 1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+}
+
+
