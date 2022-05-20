@@ -31,24 +31,61 @@ void listapiezas::dibuja()
 
 void listapiezas::mover(int h)
 {
-    
+    bool val;
         Vector2D a;
-        cout << "donde la quieres mover " << endl;  cin >> a.x >> a.y;
+        cout << "donde la quieres mover: " << endl;  cin >> a.x >> a.y;
+        //se revisa si se puede mover
+        if (h < 16)//es un peon
+            val=validar_peon(a, h);
 
-        lista_piezas[h]->posicion.x = a.x;
-        lista_piezas[h]->posicion.y = a.y;
-    
+
+        int k=donde_esta(a);
+        bool j, w;
+        if (val)
+        {
+
+
+            if (k != numero_p)
+            {
+                j = es_blanca(h);//la que queremos mover
+                w = es_blanca(k);//a donde va
+                if (j == w)//vemos si son del mismo color
+                    cout << "no se puede mover" << endl;
+                else//destruimos y movemos
+                {
+                    destruir(k);
+                    lista_piezas[h]->posicion.x = a.x;
+                    lista_piezas[h]->posicion.y = a.y;
+                }
+            }
+
+            else//si no detecta que hay alguna pieza, tambien mueve
+            {
+                lista_piezas[h]->posicion.x = a.x;
+                lista_piezas[h]->posicion.y = a.y;
+            }
+        }
+        else
+            cout << "movimineto invalido"<<endl;
+       
 }
 
 int listapiezas::donde_esta(Vector2D a)
 {
-
-    for (int i = 0; i < numero_p; i++)
+for (int i = 0; i < numero_p; i++)
     {
         if (lista_piezas[i]->posicion.x == a.x && lista_piezas[i]->posicion.y == a.y)//REVISAMOS LA POSCION DE LOS PEONES
+        {
+            if (es_blanca(i))
+                cout << "es blanca" << endl;
+            else
+                cout << "es negra" << endl;
             return i;
+        }
+            
     }
     return numero_p;
+   
   
 }
 void listapiezas::destruir(int i)
