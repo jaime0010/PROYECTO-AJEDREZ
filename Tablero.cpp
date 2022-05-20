@@ -85,7 +85,7 @@ void tablero::dibuja()
 Vector2D tablero::preguntar()
 {
     Vector2D a;
-    cout << "donde queires" << endl;
+    cout << "Que pieza quieres mover?" << endl;
     cin >> a.x >> a.y;
     return a;
 }
