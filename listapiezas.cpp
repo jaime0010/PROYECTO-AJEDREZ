@@ -178,37 +178,14 @@ bool listapiezas::validar_peon(Vector2D a,int i)
     }
 }
 
-//ACTUALIZADO PARA QUE NO SALTE PIEZAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Ya NO salta piezas
 bool listapiezas::validar_torre(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
     int disty = a.y - lista_piezas[i]->posicion.y;
 
-    if (distx > 0)//se mueve en eje X
-    {
-        if (disty != 0)
-        {
-            return false;
-        }
-        else
-        {
-            for (int posx = 0; posx < distx -1; posx++)
-            {
-                int pos_revisar = a.x - posx; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
-                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
-                //for (int posx = distx; posx > 0; posx--)
-                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.x
-                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
-                {
-                    if (lista_piezas[j]->posicion.x == pos_revisar && lista_piezas[j]->posicion.y == a.y -1)//Vemos si alguna de ellas tiene una coordenada x coincidente con pos_revisar
-                        //También comparamos la posicion y, pero en este caso como solo avanza en x, NO HACE FALTA BUCLEARLO, simplemente usamos a.y
-                        return false;
-                }
-            }
-            return true;
-        }
-    }
-    else if (disty > 0)//se mueve en eje y
+    //Movimiento vertical hacia arriba (positivo). Por ejemplo: Desde (1,1) hasta (1,5)
+    if (disty > 0)
     {
         if (distx != 0)
         {
@@ -216,71 +193,89 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posy = 0; posy < disty -1; posy++)
+            for (int posy = disty - 1; posy > 0; posy--) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int pos_revisar = a.y - posy; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
-                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
-                //for (int posy = distx; posy > 0; posy--)
-                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.y
-                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
-                {
-                    if (lista_piezas[j]->posicion.y == pos_revisar && lista_piezas[j]->posicion.x == a.x -1)//Vemos si alguna de ellas tiene una coordenada y coincidente con pos_revisar
-                        //También comparamos la posicion x, pero en este caso como solo avanza en y, NO HACE FALTA BUCLEARLO, simplemente usamos a.x
-                        return false;
-                }
-            }
-            return true;
-        }
-    }
-    else if (distx < 0)//se mueve en eje X
-    {
-        if (disty != 0)
-        {
-            return false;
-        }
-        else
-        {
-            for (int posx = 0; posx < -distx -1; posx++)
-            {
-                int pos_revisar = a.x + posx; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
-                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
-                //for (int posx = distx; posx > 0; posx--)
-                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.x
-                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
-                {
-                    if (lista_piezas[j]->posicion.x == pos_revisar && lista_piezas[j]->posicion.y == a.y + 1)//Vemos si alguna de ellas tiene una coordenada x coincidente con pos_revisar
-                        //También comparamos la posicion y, pero en este caso como solo avanza en x, NO HACE FALTA BUCLEARLO, simplemente usamos a.y
-                        return false;
-                }
-            }
-            return true;
-        }
-    }
-    else if (disty < 0)//se mueve en eje y
-    {
-        if (distx != 0)
-        {
-            return false;
-        }
-        else
-        {
-            for (int posy = 0; posy < -disty -1; posy++)
-            {
-                int pos_revisar = a.y + posy; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
-                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
-                //for (int posy = distx; posy > 0; posy--)
-                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.y
-                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
-                {
-                    if (lista_piezas[j]->posicion.y == pos_revisar && lista_piezas[j]->posicion.x == a.x + 1)//Vemos si alguna de ellas tiene una coordenada y coincidente con pos_revisar
-                        //También comparamos la posicion x, pero en este caso como solo avanza en y, NO HACE FALTA BUCLEARLO, simplemente usamos a.x
-                        return false;
-                }
-            }
-            return true;
-        }
-    }
+                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
 
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
+                    if (lista_piezas[j]->posicion.y == coordenada_y && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                }
+            }
+            return true; //Si es correcto, SÍ valida el movimiento.
+        }
+    }
+    //Movimiento horizontal hacia la derecha (positivo). Por ejemplo: Desde (1,3) hasta (5,3)
+    else if (distx > 0)
+    {
+        if (disty != 0)
+        {
+            return false;
+        }
+        else
+        {
+            for (int posx = distx - 1; posx > 0; posx--) //Itera tantas veces como huecos hay entre inicio y destino
+            {
+                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    //Importante: la coordenda y se mantiene constante en este tipo de movimiento (al ser una torre)
+                    if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == a.y)
+                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                }
+            }
+            return true; //Si es correcto, SÍ valida el movimiento.
+        }
+    }
+    //Movimiento vertical hacia abajo (negativo). Por ejemplo: Desde (1,5) hasta (1,1)
+    else if (disty < 0)
+    {
+        if (distx != 0)
+        {
+            return false;
+        }
+        else
+        {
+            for (int posy = disty + 1; posy < 0; posy++) //Itera tantas veces como huecos hay entre inicio y destino
+            {
+                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
+                    if (lista_piezas[j]->posicion.y == coordenada_y && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                }
+            }
+            return true; //Si es correcto, SÍ valida el movimiento.
+        }
+    }
+    //Movimiento horizontal hacia la izquierda (negativo). Por ejemplo: Desde (5,3) hasta (1,3)
+    else if (distx < 0)
+    {
+        if (disty != 0)
+        {
+            return false;
+        }
+        else
+        {
+            for (int posx = distx + 1; posx < 0; posx++) //Itera tantas veces como huecos hay entre inicio y destino
+            {
+                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
+                    if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == a.y)
+                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                }
+            }
+            return true; //Si es correcto, SÍ valida el movimiento.
+        }
+    }
    
 }
 
