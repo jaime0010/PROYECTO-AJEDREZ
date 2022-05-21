@@ -220,7 +220,7 @@ bool listapiezas::validar_reina(Vector2D, int)
     return false;
 }
 
-bool listapiezas::validar_caballo(Vector2D a, int i)
+bool listapiezas::validar_caballo(Vector2D a, int i)//esto lo hizo pedro
 {
     int distx = abs(a.x - lista_piezas[i]->posicion.x);
     int disty = abs(a.y - lista_piezas[i]->posicion.y);
