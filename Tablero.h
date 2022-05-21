@@ -8,6 +8,7 @@ class tablero
 public:
 	tablero();
 	listapiezas piezas;
+	int turno = -1;
 	void inicializa(); 
 	void dibuja();
 	Vector2D preguntar();
