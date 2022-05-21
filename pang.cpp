@@ -9,7 +9,7 @@ void OnTimer(int value); //esta funcion sera llamada cuando transcurra una tempo
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 
 tablero TAB;
-
+int turno = 0;
 int main(int argc, char* argv[])
 {
 	//Inicializar el gestor de ventanas GLUT
