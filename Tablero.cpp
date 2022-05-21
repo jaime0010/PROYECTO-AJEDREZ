@@ -10,21 +10,61 @@ tablero::tablero()
 void tablero::inicializa()
 {
     
-    for (int i = 1; i < 9; i++)
+    for (int i = 1; i < 9; i++)//peones 
 
     {
-        Peon* aux = new Peon(i, 2, 0.25, 255);
+        Peon* aux = new Peon(i, 2, 0.25, 255);//blancos
         piezas.agregar(aux);//esto lo agregas
-        Peon* aux1 = new Peon(i, 7, 0.25, 0);
+        Peon* aux1 = new Peon(i, 7, 0.25, 0);//negros
         piezas.agregar(aux1);//esto lo agregas
     }
-    for (int i = 1; i <9 ; i++)
+    for (int i = 1; i <9 ; i++)//torres
     {
         if (i == 1 || i == 8)
         {
-            Torre* aux = new Torre(i, 1, 0.25, 255);
+            Torre* aux = new Torre(i, 1, 0.25, 255);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Torre* aux1 = new Torre(i, 8, 0.25, 0);
+            Torre* aux1 = new Torre(i, 8, 0.25, 0);//negras
+            piezas.agregar(aux1);//esto lo agregas
+        }
+    }
+    for (int i = 1; i < 9; i++)//alfiles
+    {
+        if (i == 3 || i == 6)
+        {
+            Alfil* aux = new Alfil(i, 1, 0.25, 255);//blancas
+            piezas.agregar(aux);//esto lo agregas
+            Alfil* aux1 = new Alfil(i, 8, 0.25, 0);//negras
+            piezas.agregar(aux1);//esto lo agregas
+        }
+    }
+    for (int i = 1; i < 9; i++)//reyes
+    {
+        if (i == 5)
+        {
+            Rey* aux = new Rey(i, 1, 0.25, 255);//blancas
+            piezas.agregar(aux);//esto lo agregas
+            Rey* aux1 = new Rey(i, 8, 0.25, 0);//negras
+            piezas.agregar(aux1);//esto lo agregas
+        }
+    }
+    for (int i = 1; i < 9; i++)//reinas
+    {
+        if (i == 4)
+        {
+            Reina* aux = new Reina(i, 1, 0.25, 255);//blancas
+            piezas.agregar(aux);//esto lo agregas
+            Reina* aux1 = new Reina(i, 8, 0.25, 0);//negras
+            piezas.agregar(aux1);//esto lo agregas
+        }
+    }
+    for (int i = 1; i < 9; i++)//caballos
+    {
+        if (i == 2 || i == 7)
+        {
+            Caballo* aux = new Caballo(i, 1, 0.25, 255);//blancas
+            piezas.agregar(aux);//esto lo agregas
+            Caballo* aux1 = new Caballo(i, 8, 0.25, 0);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
@@ -78,6 +118,17 @@ void tablero::dibuja()
             }
         }
     }
+
+    glColor3ub(255,0,128);
+    glBegin(GL_POLYGON);
+    glVertex3f(10.5,0.5 , 0.0f);
+    glVertex3f(10.5, 8.5, 0.0f);
+    glVertex3f(12.5, 8.5 , 0.0f);
+    glVertex3f(12.5 , 0.5 , 0.0f);
+    glEnd();
+
+
+    
     piezas.dibuja();
 
 }
@@ -85,7 +136,7 @@ void tablero::dibuja()
 Vector2D tablero::preguntar()
 {
     Vector2D a;
-    cout << "Que pieza quieres mover?" << endl;
+    cout << "Que pieza quieres mover? " << endl;
     cin >> a.x >> a.y;
     return a;
 }
@@ -94,7 +145,7 @@ void tablero::esta_ocupada(Vector2D a)
 {
     if (piezas.donde_esta(a) != MAX_PIEZAS)//la pieza esta ahi, en la 'i' que devuelve
     {
-        cout << "\nhay una pieza" << endl;
+        cout << "\nHay una pieza " << endl;
         piezas.mover(piezas.donde_esta(a));
     }
 
