@@ -178,13 +178,13 @@ bool listapiezas::validar_peon(Vector2D a,int i)
     }
 }
 
-//Actualizado para que no salte piezas
+//ACTUALIZADO PARA QUE NO SALTE PIEZAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 bool listapiezas::validar_torre(Vector2D a, int i)
 {
-    int distx = lista_piezas[i]->posicion.x - a.x;
-    int disty = lista_piezas[i]->posicion.y - a.y;
+    int distx = a.x - lista_piezas[i]->posicion.x;
+    int disty = a.y - lista_piezas[i]->posicion.y;
 
-    if (distx !=0)//se mueve en eje X
+    if (distx > 0)//se mueve en eje X
     {
         if (disty != 0)
         {
@@ -192,7 +192,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posx = 0; posx < distx; posx++)
+            for (int posx = 0; posx < distx -1; posx++)
             {
                 int pos_revisar = a.x - posx; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
                 //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
@@ -200,7 +200,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
                 //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.x
                 for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                 {
-                    if (lista_piezas[j]->posicion.x == pos_revisar && lista_piezas[j]->posicion.y == a.y)//Vemos si alguna de ellas tiene una coordenada x coincidente con pos_revisar
+                    if (lista_piezas[j]->posicion.x == pos_revisar && lista_piezas[j]->posicion.y == a.y -1)//Vemos si alguna de ellas tiene una coordenada x coincidente con pos_revisar
                         //También comparamos la posicion y, pero en este caso como solo avanza en x, NO HACE FALTA BUCLEARLO, simplemente usamos a.y
                         return false;
                 }
@@ -208,7 +208,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
             return true;
         }
     }
-    else if (disty != 0)//se mueve en eje y
+    else if (disty > 0)//se mueve en eje y
     {
         if (distx != 0)
         {
@@ -216,7 +216,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posy = 0; posy < disty; posy++)
+            for (int posy = 0; posy < disty -1; posy++)
             {
                 int pos_revisar = a.y - posy; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
                 //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
@@ -224,7 +224,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
                 //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.y
                 for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                 {
-                    if (lista_piezas[j]->posicion.y == pos_revisar && lista_piezas[j]->posicion.x == a.x)//Vemos si alguna de ellas tiene una coordenada y coincidente con pos_revisar
+                    if (lista_piezas[j]->posicion.y == pos_revisar && lista_piezas[j]->posicion.x == a.x -1)//Vemos si alguna de ellas tiene una coordenada y coincidente con pos_revisar
                         //También comparamos la posicion x, pero en este caso como solo avanza en y, NO HACE FALTA BUCLEARLO, simplemente usamos a.x
                         return false;
                 }
@@ -232,13 +232,155 @@ bool listapiezas::validar_torre(Vector2D a, int i)
             return true;
         }
     }
+    else if (distx < 0)//se mueve en eje X
+    {
+        if (disty != 0)
+        {
+            return false;
+        }
+        else
+        {
+            for (int posx = 0; posx < -distx -1; posx++)
+            {
+                int pos_revisar = a.x + posx; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
+                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
+                //for (int posx = distx; posx > 0; posx--)
+                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.x
+                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                {
+                    if (lista_piezas[j]->posicion.x == pos_revisar && lista_piezas[j]->posicion.y == a.y + 1)//Vemos si alguna de ellas tiene una coordenada x coincidente con pos_revisar
+                        //También comparamos la posicion y, pero en este caso como solo avanza en x, NO HACE FALTA BUCLEARLO, simplemente usamos a.y
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+    else if (disty < 0)//se mueve en eje y
+    {
+        if (distx != 0)
+        {
+            return false;
+        }
+        else
+        {
+            for (int posy = 0; posy < -disty -1; posy++)
+            {
+                int pos_revisar = a.y + posy; //Cada una de las posiciones por las que pasa la pieza hasta llegar a su destino
+                //Las recorre empezando desde el destino, podríamos empezar desde el inicio si hacemos el bucle: 
+                //for (int posy = distx; posy > 0; posy--)
+                //BUCLEAR PARA REVISAR TODAS LAS PIEZAS lista_piezas[j]->posicion.y
+                for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                {
+                    if (lista_piezas[j]->posicion.y == pos_revisar && lista_piezas[j]->posicion.x == a.x + 1)//Vemos si alguna de ellas tiene una coordenada y coincidente con pos_revisar
+                        //También comparamos la posicion x, pero en este caso como solo avanza en y, NO HACE FALTA BUCLEARLO, simplemente usamos a.x
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+
+   
 }
 
+//Actualizado para que no se puedan saltar piezas
 bool listapiezas::validar_alfil(Vector2D a, int i)
 {
+    /*
     if (abs(lista_piezas[i]->posicion.x - a.x) == abs(lista_piezas[i]->posicion.y - a.y))
         return true;
     else return false;
+    */
+    int distx = a.x - lista_piezas[i]->posicion.x;
+    int disty = a.y - lista_piezas[i]->posicion.y;
+
+    if (abs(distx) == abs(disty))
+    {
+        if (distx > 0 && disty > 0)
+        {
+            for (int posx = 0; posx < distx - 1; posx++)
+            {
+                for (int posy = 0; posy < disty - 1; posy++)
+                {
+                    if (abs(posx) == abs(posy))
+                    {
+                        int pos_revisar_x = a.x - posx;
+                        int pos_revisar_y = a.y - posy;
+                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                        {
+                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        else if (distx < 0 && disty < 0)
+        {
+            for (int posx = 0; posx < -distx - 1; posx++)
+            {
+                for (int posy = 0; posy < -disty - 1; posy++)
+                {
+                    if (abs(posx) == abs(posy))
+                    {
+                        int pos_revisar_x = a.x + posx;
+                        int pos_revisar_y = a.y + posy;
+                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                        {
+                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        else if (distx < 0 && disty > 0)
+        {
+            for (int posx = 0; posx < -distx - 1; posx++)
+            {
+                for (int posy = 0; posy < disty - 1; posy++)
+                {
+                    if (abs(posx) == abs(posy))
+                    {
+                        int pos_revisar_x = a.x + posx;
+                        int pos_revisar_y = a.y - posy;
+                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                        {
+                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        if (distx > 0 && disty < 0)
+        {
+            for (int posx = 0; posx < distx - 1; posx++)
+            {
+                for (int posy = 0; posy < -disty - 1; posy++)
+                {
+                    if (abs(posx) == abs(posy))
+                    {
+                        int pos_revisar_x = a.x - posx;
+                        int pos_revisar_y = a.y + posy;
+                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                        {
+                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
+    else
+        return false;
+
 }
 
 bool listapiezas::validar_rey(Vector2D a, int i)
@@ -254,7 +396,7 @@ bool listapiezas::validar_reina(Vector2D, int)
     return false;
 }
 
-bool listapiezas::validar_caballo(Vector2D a, int i)//esto lo hizo pedro
+bool listapiezas::validar_caballo(Vector2D a, int i)
 {
     int distx = abs(a.x - lista_piezas[i]->posicion.x);
     int disty = abs(a.y - lista_piezas[i]->posicion.y);
@@ -263,5 +405,3 @@ bool listapiezas::validar_caballo(Vector2D a, int i)//esto lo hizo pedro
     else
         return false;
 }
-
-
