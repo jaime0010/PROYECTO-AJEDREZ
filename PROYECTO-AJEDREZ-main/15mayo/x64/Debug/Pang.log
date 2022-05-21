@@ -1,0 +1,18 @@
+﻿  peon.cpp
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(43,70): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(43,52): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(44,70): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(44,52): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(45,71): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(45,53): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(46,69): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(46,51): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(82,70): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(82,52): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(83,70): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(83,52): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(84,71): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(84,53): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(85,69): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\peon.cpp(85,51): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+  Pang.vcxproj -> C:\Users\felip\OneDrive\Escritorio\PROYECTO-AJEDREZ-main\PROYECTO-AJEDREZ-main\15mayo\x64\Debug\Pang.exe
