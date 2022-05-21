@@ -135,6 +135,13 @@ void tablero::dibuja()
 
 Vector2D tablero::preguntar()
 {
+     turno++;
+    float k = turno % 2;
+    if (k == 0)
+        cout << "TURNO BLANCAS, ";
+    else
+        cout << "TURNO NEGRAS, ";
+    
     Vector2D a;
     cout << "Que pieza quieres mover? " << endl;
     cin >> a.x >> a.y;
@@ -143,10 +150,19 @@ Vector2D tablero::preguntar()
 
 void tablero::esta_ocupada(Vector2D a)
 {
-    if (piezas.donde_esta(a) != MAX_PIEZAS)//la pieza esta ahi, en la 'i' que devuelve
+    float j = turno % 2;
+    int h = piezas.donde_esta(a);
+    if (h != MAX_PIEZAS)//la pieza esta ahi, en la 'i' que devuelve
     {
-        cout << "\nHay una pieza " << endl;
-        piezas.mover(piezas.donde_esta(a));
+        float k = h % 2;
+        if (j == k)//te toca
+        {
+            cout << "\nHay una pieza " << endl;
+            piezas.mover(piezas.donde_esta(a));
+        }
+        else
+            cout << "NO ES TU TURNO" << endl;
+        
     }
 
 }
