@@ -122,14 +122,32 @@ int listapiezas::donde_esta(Vector2D a)
 
 void listapiezas::destruir(int i)
 {
-    if (y_fuera > 8)
+     if (es_blanca(i))
     {
-        x_fuera = 12;
-        y_fuera = 1;
+        if (y_fuera_blanca > 8)
+        {
+            x_fuera_blanca = 12;
+            y_fuera_blanca = 1;
+        }
+
+
+        lista_piezas[i]->posicion.x = x_fuera_blanca;
+        lista_piezas[i]->posicion.y = y_fuera_blanca;
+        y_fuera_blanca++;
     }
-    lista_piezas[i]->posicion.x=x_fuera;
-    lista_piezas[i]->posicion.y = y_fuera;
-    y_fuera++;
+    else
+    {
+        if (y_fuera_negra > 8)
+        {
+            x_fuera_negra = -3.5;
+            y_fuera_negra = 1;
+        }
+
+
+        lista_piezas[i]->posicion.x = x_fuera_negra;
+        lista_piezas[i]->posicion.y = y_fuera_negra;
+        y_fuera_negra++;
+    }
 }
 
 bool listapiezas::es_blanca(int i)
