@@ -122,32 +122,14 @@ int listapiezas::donde_esta(Vector2D a)
 
 void listapiezas::destruir(int i)
 {
-    if (es_blanca(i))
+    if (y_fuera > 8)
     {
-        if (y_fuera_blanca > 8)
-        {
-            x_fuera_blanca = 12;
-            y_fuera_blanca = 1;
-        }
-
-
-        lista_piezas[i]->posicion.x = x_fuera_blanca;
-        lista_piezas[i]->posicion.y = y_fuera_blanca;
-        y_fuera_blanca++;
+        x_fuera = 12;
+        y_fuera = 1;
     }
-    else
-    {
-        if (y_fuera_negra > 8)
-        {
-            x_fuera_negra = -3.5;
-            y_fuera_negra = 1;
-        }
-
-
-        lista_piezas[i]->posicion.x = x_fuera_negra;
-        lista_piezas[i]->posicion.y = y_fuera_negra;
-        y_fuera_negra++;
-    }
+    lista_piezas[i]->posicion.x=x_fuera;
+    lista_piezas[i]->posicion.y = y_fuera;
+    y_fuera++;
 }
 
 bool listapiezas::es_blanca(int i)
@@ -297,32 +279,29 @@ bool listapiezas::validar_torre(Vector2D a, int i)
    
 }
 
-//Actualizado para que no se puedan saltar piezas
+//Ya NO salta piezas
 bool listapiezas::validar_alfil(Vector2D a, int i)
 {
-    /*
-    if (abs(lista_piezas[i]->posicion.x - a.x) == abs(lista_piezas[i]->posicion.y - a.y))
-        return true;
-    else return false;
-    */
+
     int distx = a.x - lista_piezas[i]->posicion.x;
     int disty = a.y - lista_piezas[i]->posicion.y;
 
     if (abs(distx) == abs(disty))
     {
+        //Movimiento en el primer cuadrante (X hacia la derecha, Y hacia arriba)
         if (distx > 0 && disty > 0)
         {
-            for (int posx = 0; posx < distx - 1; posx++)
+            for (int posx = distx - 1; posx > 0; posx--)
             {
-                for (int posy = 0; posy < disty - 1; posy++)
+                for (int posy = disty - 1; posy > 0; posy--)
                 {
                     if (abs(posx) == abs(posy))
                     {
-                        int pos_revisar_x = a.x - posx;
-                        int pos_revisar_y = a.y - posy;
+                        int coordenada_x = lista_piezas[i]->posicion.x + posx;
+                        int coordenada_y = lista_piezas[i]->posicion.y + posy;
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
-                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                            if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
                                 return false;
                         }
                     }
@@ -330,39 +309,20 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
             }
             return true;
         }
-        else if (distx < 0 && disty < 0)
-        {
-            for (int posx = 0; posx < -distx - 1; posx++)
-            {
-                for (int posy = 0; posy < -disty - 1; posy++)
-                {
-                    if (abs(posx) == abs(posy))
-                    {
-                        int pos_revisar_x = a.x + posx;
-                        int pos_revisar_y = a.y + posy;
-                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
-                        {
-                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
-                                return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
+        //Movimiento en el segundo cuadrante (X hacia la iquierda, Y hacia arriba)
         else if (distx < 0 && disty > 0)
         {
-            for (int posx = 0; posx < -distx - 1; posx++)
+            for (int posx = distx + 1; posx < 0; posx++)
             {
-                for (int posy = 0; posy < disty - 1; posy++)
+                for (int posy = disty - 1; posy > 0; posy--)
                 {
                     if (abs(posx) == abs(posy))
                     {
-                        int pos_revisar_x = a.x + posx;
-                        int pos_revisar_y = a.y - posy;
+                        int coordenada_x = lista_piezas[i]->posicion.x + posx;
+                        int coordenada_y = lista_piezas[i]->posicion.y + posy;
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
-                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                            if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
                                 return false;
                         }
                     }
@@ -370,19 +330,41 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
             }
             return true;
         }
-        if (distx > 0 && disty < 0)
+        //Movimiento en el tercer cuadrante (X hacia la izquierda, Y hacia abajo)
+        else if (distx < 0 && disty < 0)
         {
-            for (int posx = 0; posx < distx - 1; posx++)
+            for (int posx = distx + 1; posx < 0; posx++)
             {
-                for (int posy = 0; posy < -disty - 1; posy++)
+                for (int posy = disty + 1; posy < 0; posy++)
                 {
                     if (abs(posx) == abs(posy))
                     {
-                        int pos_revisar_x = a.x - posx;
-                        int pos_revisar_y = a.y + posy;
+                        int coordenada_x = lista_piezas[i]->posicion.x + posx;
+                        int coordenada_y = lista_piezas[i]->posicion.y + posy;
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
-                            if (lista_piezas[j]->posicion.x == pos_revisar_x && lista_piezas[j]->posicion.y == pos_revisar_y)
+                            if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        //Movimiento en el cuarto cuadrante (X hacia la derecha, Y hacia abajo)
+        else if (distx > 0 && disty < 0)
+        {
+            for (int posx = distx - 1; posx > 0; posx--)
+            {
+                for (int posy = disty + 1; posy < 0; posy++)
+                {
+                    if (abs(posx) == abs(posy))
+                    {
+                        int coordenada_x = lista_piezas[i]->posicion.x + posx;
+                        int coordenada_y = lista_piezas[i]->posicion.y + posy;
+                        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+                        {
+                            if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
                                 return false;
                         }
                     }
@@ -393,7 +375,6 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
     }
     else
         return false;
-
 }
 
 bool listapiezas::validar_rey(Vector2D a, int i)
