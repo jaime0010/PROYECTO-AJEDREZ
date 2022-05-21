@@ -141,41 +141,71 @@ bool listapiezas::es_blanca(int i)
   
 }
 
+//Ya no salta piezas, ni come hacia adelante (ni cuando avanza 1 ni cuando avanza 2)
 bool listapiezas::validar_peon(Vector2D a,int i)
 {
-    if (lista_piezas[i]->color == 255)//es blanca
-    {
-        if (a.x - lista_piezas[i]->posicion.x == 0)//que no se mueva en la X
-        {
-            int dist = a.y - lista_piezas[i]->posicion.y;//vemos cuanto se mueve
+    int distx = a.x - lista_piezas[i]->posicion.x;
+    int disty = a.y - lista_piezas[i]->posicion.y;
 
-            if (dist < 3 && lista_piezas[i]->posicion.y == 2)//se comprueba si es primer movimiento con posicion
-                return true;
-            else if (dist == 1)
-                return true;
-            else
-                return false;
-        }
-        else
-            return false;
-
-        
-    }
-    else if (lista_piezas[i]->color == 0)//es negra
+    //Peones blancos
+    if (lista_piezas[i]->color == 255)
     {
-        if (a.x - lista_piezas[i]->posicion.x == 0)//que no se mueva en la X
+        if (distx == 0) //No se mueve en la X
         {
-            int dist = lista_piezas[i]->posicion.y-a.y;//vemos cuanto se mueve
-            if (dist < 3 && lista_piezas[i]->posicion.y == 7)
+            if (disty < 3 && lista_piezas[i]->posicion.y == 2) //Comprueba si es primer movimiento
+            {
+                //Si es el primer movimiento, hay que evitar que salte una pieza. Tambien hay que evitar comerse al destino.
+                //Solo hay un espacio entre inicio y destino, por lo que:
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    if ((lista_piezas[j]->posicion.y == a.y - 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
+                }
+            }
+            else if (disty == 1)
+            {
+                //El peón NO puede comer hacia adelante.
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en dicha posición intermedia, NO valida el movimiento.
+                }
                 return true;
-            else if (dist == 1)
-                return true;
-            else
-                return false;
-        }
-        else
+            }
+        } 
+        else //Habria que meter un else if (disty == 1 || == -1) que solo devuelva TRUE si hay una pieza en la casilla de destino
             return false;
     }
+    //Peones negros
+    else if (lista_piezas[i]->color == 0)
+    {
+        if (distx == 0) //No se mueve en la X
+        {
+            if (disty < 3 && lista_piezas[i]->posicion.y == 7) //Comprueba si es primer movimiento
+            {
+                //Si es el primer movimiento, hay que evitar que salte una pieza. Tambien hay que evitar comerse al destino.
+                //Solo hay un espacio entre inicio y destino, por lo que:
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    if ((lista_piezas[j]->posicion.y == a.y + 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
+                }
+            }
+            else if (disty == 1)
+            {
+                //El peón NO puede comer hacia adelante.
+                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+                {
+                    if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                        return false; //Si hay alguna pieza en dicha posición intermedia, NO valida el movimiento.
+                }
+                return true;
+            }
+        }
+        else //Habria que meter un else if (disty == 1 || == -1) que solo devuelva TRUE si hay una pieza en la casilla de destino
+            return false;
+    }
+    
 }
 
 //Ya NO salta piezas
