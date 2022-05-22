@@ -506,7 +506,7 @@ bool listapiezas::jaque_negro() //i=25 es rey negro
     bool p, a, t, c, reina, rey;
    
     int i,ocupada=0;
-    for (i = 0; i < 30; i++)//se comprueba si alguna pieza se puede mover a la posicion del rey
+    for (i = 0; i < 30; i+=2)//se comprueba si alguna pieza blanca se puede mover a la posicion del rey
     {
         p = a = t = c = reina = rey = false;
         if (i < 16)//0 a 15 es un peon
@@ -520,7 +520,7 @@ bool listapiezas::jaque_negro() //i=25 es rey negro
         if (i > 25 && i < 28)//26 y 27 son las reinas
             if (validar_alfil(lista_piezas[25]->posicion, i) || validar_torre(lista_piezas[25]->posicion, i))
                 reina = true;
-        if (i > 27 && i < 30)//28, y 29
+        if (i > 27 && i < 32)//28, y 29
             c = validar_caballo(lista_piezas[25]->posicion, i);
         if (p || a || t || c || reina || rey)
             ocupada++;
