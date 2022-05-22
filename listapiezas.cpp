@@ -479,10 +479,23 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         return false;
 }
 
+//Actualizado
 bool listapiezas::validar_rey(Vector2D a, int i)
 {
     if (abs(lista_piezas[i]->posicion.x - a.x) < 2 && abs(lista_piezas[i]->posicion.y - a.y) < 2)
+    {
+        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+        {
+            if (lista_piezas[j]->posicion.x == a.x && lista_piezas[j]->posicion.y == a.y)
+            {
+                if ((lista_piezas[j]->color != lista_piezas[i]->color))
+                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                else
+                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+            }
+        }
         return true;
+    }
     else
         return false;
 }
@@ -492,15 +505,31 @@ bool listapiezas::validar_reina(Vector2D, int)
     return false;
 }
 
+//Actualizado
 bool listapiezas::validar_caballo(Vector2D a, int i)
 {
     int distx = abs(a.x - lista_piezas[i]->posicion.x);
     int disty = abs(a.y - lista_piezas[i]->posicion.y);
-    if ((distx > 0 && distx < 3) && (disty > 0 && disty < 3) && (distx == 2*disty || disty == 2*distx))
+
+
+    if ((distx > 0 && distx < 3) && (disty > 0 && disty < 3) && (distx == 2 * disty || disty == 2 * distx))
+    {
+        for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
+        {
+            if (lista_piezas[j]->posicion.x == a.x && lista_piezas[j]->posicion.y == a.y)
+            {
+                if ((lista_piezas[j]->color != lista_piezas[i]->color))
+                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                else
+                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+            }
+        }
         return true;
+    }
     else
         return false;
 }
+
 bool listapiezas::jaque_negro() //i=25 es rey negro
 {
     bool p, a, t, c, reina, rey;
