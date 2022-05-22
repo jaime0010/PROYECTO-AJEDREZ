@@ -532,38 +532,50 @@ bool listapiezas::jaque_negro() //i=25 es rey negro
 
 bool listapiezas::jaquemate_negro()//i=25 es rey negro
 {
-    int i, j,k,tocado=0;
+   int i, j,k,tocado=0,casilla=0;
     bool p, al, t, c, reina, rey;
+    Vector2D a;
+
+    int reysi=0, piezasi=0;
 
     for (i = -1; i <= 1; i++)
     {
         for (j = -1; j <= 1; j++)
         {
-            Vector2D a = (lista_piezas[25]->posicion.x + i, lista_piezas[25]->posicion.y + j);//generamos las posiciones
-            for (k = 0; k < 30; k++)//se comprueba si alguna pieza se puede mover a la posicion del rey
+            a.x = lista_piezas[25]->posicion.x + i; 
+            a.y=lista_piezas[25]->posicion.y + j;//generamos las posiciones
+           
+            if (validar_rey(a, 25))//si el rey puede ir a alguna de las casillas de alrededor
             {
-                p = al = t = c = reina = rey = false;
+                casilla = 0;
+                reysi++;
+                for (k = 0; k < 32; k += 2)//se comprueba si alguna pieza se puede mover a las casillas que puede el rey
+                {
+                    p = al = t = c = reina = rey = false;
 
-                if (k < 16)//0 a 15 es un peon
-                    p = validar_peon(a, k);
-                if (k> 15 && k < 20)// 16 a 19 es una torre
-                    t = validar_torre(a, k);
-                if (k > 19 && k < 24)//20 a 23 es un alfil
-                    al = validar_alfil(a, k);
-                if (k == 24)//24 y 25 son los reyes
-                    rey = validar_rey(a, k);
-                if (k > 25 && k < 28)//26 y 27 son las reinas
-                    if (validar_alfil(a, k) || validar_torre(a, k))
-                        reina = true;
-                if (k > 27 && k < 30)//28, y 29
-                    c = validar_caballo(a, k);
-                if (p || al || t || c || reina || rey)
-                    tocado++;
+                    if (k < 16)//0 a 15 es un peon
+                        p = validar_peon(a, k);
+                    if (k > 15 && k < 20)// 16 a 19 es una torre
+                        t = validar_torre(a, k);
+                    if (k > 19 && k < 24)//20 a 23 es un alfil
+                        al = validar_alfil(a, k);
+                    if (k == 24)//24 y 25 son los reyes
+                        rey = validar_rey(a, k);
+                    if (k > 25 && k < 28)//26 y 27 son las reinas
+                        if (validar_alfil(a, k) || validar_torre(a, k))
+                            reina = true;
+                    if (k > 27 && k < 32)//28 a 31
+                        c = validar_caballo(a, k);
+                    if (p || al || t || c || reina || rey)
+                        casilla++;
+                }
+                if (casilla > 0)
+                    piezasi++;
             }
                      
         }
     }
-    if (tocado == 9)//no se puede mover a ningun sitio.
+    if (reysi==piezasi)//no se puede mover a ningun sitio.
         return true;
     else
         return false;
