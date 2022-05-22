@@ -39,4 +39,8 @@ public:
 	bool validar_reina(Vector2D, int);
 
 	bool validar_caballo(Vector2D, int);
+	
+	bool jaque_negro();
+
+	bool jaquemate_negro();
 };
