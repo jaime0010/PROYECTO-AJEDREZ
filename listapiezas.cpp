@@ -51,7 +51,7 @@ void listapiezas::mover(int h)
             val = validar_rey(a, h);
         if (h > 25 && h < 28)//26 y 27 son las reinas
             val=validar_reina(a,h);
-        if (h > 27 && h < 30)//28, y 29
+        if (h > 27 && h < 32)//28, y 29
             val = validar_caballo(a, h);
 
 
