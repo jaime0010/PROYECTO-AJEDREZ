@@ -11,7 +11,7 @@ listapiezas::listapiezas()
     }
 }
 
-bool listapiezas::agregar(Pieza*p)
+bool listapiezas::agregar(Pieza* p)
 {
     if (numero_p >= MAX_PIEZAS)// Si nuestro lista esta llena, ya no puede devolver mas
         return false;
@@ -23,7 +23,7 @@ bool listapiezas::agregar(Pieza*p)
 
 void listapiezas::dibuja()
 {
-    for (int i = 0;i < numero_p;i++)
+    for (int i = 0; i < numero_p; i++)
     {
         lista_piezas[i]->dibuja();
     }
@@ -31,59 +31,56 @@ void listapiezas::dibuja()
 
 void listapiezas::mover(int h)
 {
-    bool val=false;
-        Vector2D a;
-        cout << "donde la quieres mover " << endl;  cin >> a.x >> a.y;
+    bool val = false;
+    Vector2D a;
+    cout<<"donde la quieres mover "<< endl;  cin >> a.x >> a.y;
 
-        if (a.x > 0 && a.x < 9 && a.y>0 && a.y < 9)
-        {
+    if (a.x > 0 && a.x < 9 && a.y>0 && a.y < 9)
+    {
 
 
 
-            //se revisa si se puede mover
-            if (h < 16)//0 a 15 es un peon
-                val = validar_peon(a, h);
-            if (h > 15 && h < 20)// 16 a 19 es una torre
-                val = validar_torre(a, h);
-            if (h > 19 && h < 24)//20 a 23 es un alfil
-                val = validar_alfil(a, h);
-            if (h > 23 && h < 26)//24 y 25 son los reyes
-                val = validar_rey(a, h);
-            if (h > 25 && h < 28)//26 y 27 son las reinas
-                if (validar_alfil(a, h) || validar_torre(a, h))
-                    val = true;
-            if (h > 27 && h < 30)//28, y 29
-                val = validar_caballo(a, h);
+        //se revisa si se puede mover
+        if (h < 16)//0 a 15 es un peon
+            val = validar_peon(a, h);
+        if (h > 15 && h < 20)// 16 a 19 es una torre
+            val = validar_torre(a, h);
+        if (h > 19 && h < 24)//20 a 23 es un alfil
+            val = validar_alfil(a, h);
+        if (h > 23 && h < 26)//24 y 25 son los reyes
+            val = validar_rey(a, h);
+        if (h > 25 && h < 28)//26 y 27 son las reinas
+            val=validar_reina(a,h);
+        if (h > 27 && h < 30)//28, y 29
+            val = validar_caballo(a, h);
+
+
 
         int k = donde_esta(a);
         bool j, w;
-        if (val && k<numero_p)
-        {      
-         destruir(k);
-         lista_piezas[h]->posicion.x = a.x;
-         lista_piezas[h]->posicion.y = a.y;      
+        if (val && k < numero_p)
+        {
+            destruir(k);
+            lista_piezas[h]->posicion.x = a.x;
+            lista_piezas[h]->posicion.y = a.y;
         }
-
-        else if(k== numero_p)//si no detecta que hay alguna pieza, tambien mueve
-            {
-                lista_piezas[h]->posicion.x = a.x;
-                lista_piezas[h]->posicion.y = a.y;
-            }
-        
+        else if (val && k == numero_p)//si no detecta que hay alguna pieza, tambien mueve
+        {
+            lista_piezas[h]->posicion.x = a.x;
+            lista_piezas[h]->posicion.y = a.y;
+        }
         else
             cout << "movimineto invalido" << endl;
         bool jk = jaque_negro();
         if (jk)
         {
-            cout <<endl<< "estas en jake";
+            cout <<endl<< "estas en jake, mueve el rey negro";
             if (jaquemate_negro())
-                cout << "has perdido negro";
+                cout <<endl<< "HAS PERDIDO NEGRO";
         }
             
 
     }
-
-            
 }
 
 int listapiezas::donde_esta(Vector2D a)
@@ -111,15 +108,15 @@ int listapiezas::donde_esta(Vector2D a)
                 cout << "es negra" << endl;
             return i;
         }
-            
+
     }
     return numero_p;
-  
+
 }
 
 void listapiezas::destruir(int i)
 {
-     if (es_blanca(i))
+    if (es_blanca(i))
     {
         if (y_fuera_blanca > 8)
         {
@@ -153,7 +150,7 @@ bool listapiezas::es_blanca(int i)
         return true;
     else
         return false;
-  
+
 }
 
 //YA ESTÁ IMPLEMENTADA PARA JAQUE
@@ -214,7 +211,7 @@ bool listapiezas::validar_peon(Vector2D a, int i)
             }
         }
         //Avance 1 vertical
-        else if (distx == 0 && disty == - 1)
+        else if (distx == 0 && disty == -1)
         {
             //El peón NO puede comer hacia adelante.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
@@ -225,7 +222,7 @@ bool listapiezas::validar_peon(Vector2D a, int i)
             return true;
         }
         //Movimiento diagonal hacia adelante (+1 si hacia la derecha, -1 si a la izquierda).
-        else if ((distx == 1 || distx == -1) && disty == - 1)
+        else if ((distx == 1 || distx == -1) && disty == -1)
         {
             //Solo puede moverse en diagonal si es para comerse a otra pieza.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
@@ -311,7 +308,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posy = -1 ; posy >= disty; posy--) //Itera tantas veces como huecos hay entre inicio y destino
+            for (int posy = -1; posy >= disty; posy--) //Itera tantas veces como huecos hay entre inicio y destino
             {
                 int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
 
@@ -358,7 +355,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
             return true; //Si es correcto, SÍ valida el movimiento.
         }
     }
-   
+
 }
 
 //YA ESTARÍA IMPLEMENTADA PARA JAQUE
@@ -399,7 +396,7 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         //Movimiento en el segundo cuadrante (X hacia la iquierda, Y hacia arriba)
         else if (distx < 0 && disty > 0)
         {
-            for (int posx = - 1; posx >= distx; posx--)
+            for (int posx = -1; posx >= distx; posx--)
             {
                 for (int posy = 1; posy <= disty; posy++)
                 {
@@ -479,7 +476,6 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         return false;
 }
 
-//Actualizado
 bool listapiezas::validar_rey(Vector2D a, int i)
 {
     if (abs(lista_piezas[i]->posicion.x - a.x) < 2 && abs(lista_piezas[i]->posicion.y - a.y) < 2)
@@ -500,12 +496,16 @@ bool listapiezas::validar_rey(Vector2D a, int i)
         return false;
 }
 
-bool listapiezas::validar_reina(Vector2D, int)
+bool listapiezas::validar_reina(Vector2D a, int i)
 {
-    return false;
+    if (validar_alfil(a, i))
+        return true;
+    else if (validar_torre(a, i))
+        return true;
+    else
+        return false;
 }
 
-//Actualizado
 bool listapiezas::validar_caballo(Vector2D a, int i)
 {
     int distx = abs(a.x - lista_piezas[i]->posicion.x);
@@ -535,7 +535,7 @@ bool listapiezas::jaque_negro() //i=25 es rey negro
     bool p, a, t, c, reina, rey;
    
     int i,ocupada=0;
-    for (i = 0; i < 30; i+=2)//se comprueba si alguna pieza blanca se puede mover a la posicion del rey
+    for (i = 0; i < 30; i+=2)//se comprueba si alguna pieza se puede mover a la posicion del rey
     {
         p = a = t = c = reina = rey = false;
         if (i < 16)//0 a 15 es un peon
@@ -561,7 +561,7 @@ bool listapiezas::jaque_negro() //i=25 es rey negro
 
 bool listapiezas::jaquemate_negro()//i=25 es rey negro
 {
-   int i, j,k,tocado=0,casilla=0;
+    int i, j,k,tocado=0,casilla=0;
     bool p, al, t, c, reina, rey;
     Vector2D a;
 
@@ -573,35 +573,38 @@ bool listapiezas::jaquemate_negro()//i=25 es rey negro
         {
             a.x = lista_piezas[25]->posicion.x + i; 
             a.y=lista_piezas[25]->posicion.y + j;//generamos las posiciones
-           
-            if (validar_rey(a, 25))//si el rey puede ir a alguna de las casillas de alrededor
+            if (a.x > 0 && a.x < 9 && a.y>0 && a.y < 9)
             {
-                casilla = 0;
-                reysi++;
-                for (k = 0; k < 32; k += 2)//se comprueba si alguna pieza se puede mover a las casillas que puede el rey
-                {
-                    p = al = t = c = reina = rey = false;
 
-                    if (k < 16)//0 a 15 es un peon
-                        p = validar_peon(a, k);
-                    if (k > 15 && k < 20)// 16 a 19 es una torre
-                        t = validar_torre(a, k);
-                    if (k > 19 && k < 24)//20 a 23 es un alfil
-                        al = validar_alfil(a, k);
-                    if (k == 24)//24 y 25 son los reyes
-                        rey = validar_rey(a, k);
-                    if (k > 25 && k < 28)//26 y 27 son las reinas
-                        if (validar_alfil(a, k) || validar_torre(a, k))
-                            reina = true;
-                    if (k > 27 && k < 32)//28 a 31
-                        c = validar_caballo(a, k);
-                    if (p || al || t || c || reina || rey)
-                        casilla++;
+
+                if (validar_rey(a, 25))//si el rey puede ir a alguna de las casillas de alrededor
+                {
+                    casilla = 0;
+                    reysi++;
+                    for (k = 0; k < 32; k += 2)//se comprueba si alguna pieza se puede mover a las casillas que puede el rey
+                    {
+                        p = al = t = c = reina = rey = false;
+
+                        if (k < 16)//0 a 15 es un peon
+                            p = validar_peon(a, k);
+                        if (k > 15 && k < 20)// 16 a 19 es una torre
+                            t = validar_torre(a, k);
+                        if (k > 19 && k < 24)//20 a 23 es un alfil
+                            al = validar_alfil(a, k);
+                        if (k == 24)//24 y 25 son los reyes
+                            rey = validar_rey(a, k);
+                        if (k > 25 && k < 28)//26 y 27 son las reinas
+                            if (validar_alfil(a, k) || validar_torre(a, k))
+                                reina = true;
+                        if (k > 27 && k < 32)//28 a 31
+                            c = validar_caballo(a, k);
+                        if (p || al || t || c || reina || rey)
+                            casilla++;
+                    }
+                    if (casilla > 0)
+                        piezasi++;
                 }
-                if (casilla > 0)
-                    piezasi++;
             }
-                     
         }
     }
     if (reysi==piezasi)//no se puede mover a ningun sitio.
