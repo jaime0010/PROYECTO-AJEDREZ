@@ -159,8 +159,8 @@ bool listapiezas::es_blanca(int i)
   
 }
 
-//Ya no salta piezas, ni come hacia adelante (ni cuando avanza 1 ni cuando avanza 2)
-bool listapiezas::validar_peon(Vector2D a,int i)
+//Totalmente implementado
+bool listapiezas::validar_peon(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
     int disty = a.y - lista_piezas[i]->posicion.y;
@@ -168,62 +168,79 @@ bool listapiezas::validar_peon(Vector2D a,int i)
     //Peones blancos
     if (lista_piezas[i]->color == 255)
     {
-        if (distx == 0) //No se mueve en la X
+        //Avance 2 vertical (solo primer movimiento)
+        if (distx == 0 && disty == 2 && lista_piezas[i]->posicion.y == 2)
         {
-            if (disty < 3 && lista_piezas[i]->posicion.y == 2) //Comprueba si es primer movimiento
+            //El peón NO puede comer hacia adelante.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
-                //Si es el primer movimiento, hay que evitar que salte una pieza. Tambien hay que evitar comerse al destino.
-                //Solo hay un espacio entre inicio y destino, por lo que:
-                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
-                {
-                    if ((lista_piezas[j]->posicion.y == a.y - 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
-                }
+                if ((lista_piezas[j]->posicion.y == a.y - 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
+                    return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
             }
-            else if (disty == 1)
+        }
+        //Avance 1 vertical
+        else if (distx == 0 && disty == 1)
+        {
+            //El peón NO puede comer hacia adelante.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
-                //El peón NO puede comer hacia adelante.
-                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
-                {
-                    if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en dicha posición intermedia, NO valida el movimiento.
-                }
-                return true;
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                    return false; //Si hay alguna pieza en la posición final, NO valida el movimiento.
             }
-        } 
-        else //Habria que meter un else if (disty == 1 || == -1) que solo devuelva TRUE si hay una pieza en la casilla de destino
+            return true;
+        }
+        //Movimiento diagonal hacia adelante (+1 si hacia la derecha, -1 si a la izquierda).
+        else if ((distx == 1 || distx == -1) && disty == 1)
+        {
+            //Solo puede moverse en diagonal si es para comerse a otra pieza.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+            {
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                    return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
+            }
+            return false;
+        }
+        else
             return false;
     }
     //Peones negros
     else if (lista_piezas[i]->color == 0)
     {
-        if (distx == 0) //No se mueve en la X
+        //Avance 2 vertical (solo primer movimiento)
+        if (distx == 0 && disty == -2 && lista_piezas[i]->posicion.y == 7)
         {
-            if (disty < 3 && lista_piezas[i]->posicion.y == 7) //Comprueba si es primer movimiento
+            //El peón NO puede comer hacia adelante.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
-                //Si es el primer movimiento, hay que evitar que salte una pieza. Tambien hay que evitar comerse al destino.
-                //Solo hay un espacio entre inicio y destino, por lo que:
-                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
-                {
-                    if ((lista_piezas[j]->posicion.y == a.y + 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
-                }
-            }
-            else if (disty == 1)
-            {
-                //El peón NO puede comer hacia adelante.
-                for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
-                {
-                    if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en dicha posición intermedia, NO valida el movimiento.
-                }
-                return true;
+                if ((lista_piezas[j]->posicion.y == a.y + 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
+                    return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
             }
         }
-        else //Habria que meter un else if (disty == 1 || == -1) que solo devuelva TRUE si hay una pieza en la casilla de destino
+        //Avance 1 vertical
+        else if (distx == 0 && disty == - 1)
+        {
+            //El peón NO puede comer hacia adelante.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+            {
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                    return false; //Si hay alguna pieza en la posición final, NO valida el movimiento.
+            }
+            return true;
+        }
+        //Movimiento diagonal hacia adelante (+1 si hacia la derecha, -1 si a la izquierda).
+        else if ((distx == 1 || distx == -1) && disty == - 1)
+        {
+            //Solo puede moverse en diagonal si es para comerse a otra pieza.
+            for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
+            {
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                    return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
+            }
+            return false;
+        }
+        else
             return false;
     }
-    
 }
 
 //Ya NO salta piezas
