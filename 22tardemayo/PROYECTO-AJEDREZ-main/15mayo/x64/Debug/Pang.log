@@ -1,0 +1,3 @@
+﻿  CoordinadorPang.cpp
+C:\Users\felip\OneDrive\Escritorio\22tardemayo\PROYECTO-AJEDREZ-main\15mayo\listapiezas.h(19,23): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  Pang.vcxproj -> C:\Users\felip\OneDrive\Escritorio\22tardemayo\PROYECTO-AJEDREZ-main\15mayo\x64\Debug\Pang.exe
