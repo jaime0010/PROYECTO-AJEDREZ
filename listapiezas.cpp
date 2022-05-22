@@ -159,7 +159,7 @@ bool listapiezas::es_blanca(int i)
   
 }
 
-//Totalmente implementado
+//YA ESTÁ IMPLEMENTADA PARA JAQUE
 bool listapiezas::validar_peon(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
@@ -195,7 +195,7 @@ bool listapiezas::validar_peon(Vector2D a, int i)
             //Solo puede moverse en diagonal si es para comerse a otra pieza.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
-                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x && !es_blanca(j))
                     return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
             }
             return false;
@@ -233,7 +233,7 @@ bool listapiezas::validar_peon(Vector2D a, int i)
             //Solo puede moverse en diagonal si es para comerse a otra pieza.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
-                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
+                if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x && es_blanca(j))
                     return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
             }
             return false;
@@ -243,7 +243,7 @@ bool listapiezas::validar_peon(Vector2D a, int i)
     }
 }
 
-//Ya NO salta piezas
+//YA ESTARÍA IMPLEMENTADA PARA JAQUE
 bool listapiezas::validar_torre(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
@@ -258,15 +258,20 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posy = disty - 1; posy > 0; posy--) //Itera tantas veces como huecos hay entre inicio y destino
+            for (int posy = 1; posy <= disty; posy++) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué coordenada corresponde posy?
 
                 for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
                 {
                     //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
                     if (lista_piezas[j]->posicion.y == coordenada_y && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                    {
+                        if ((posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                            return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                        else
+                            return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                    }
                 }
             }
             return true; //Si es correcto, SÍ valida el movimiento.
@@ -281,7 +286,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posx = distx - 1; posx > 0; posx--) //Itera tantas veces como huecos hay entre inicio y destino
+            for (int posx = 1; posx <= distx; posx++) //Itera tantas veces como huecos hay entre inicio y destino
             {
                 int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
 
@@ -289,7 +294,12 @@ bool listapiezas::validar_torre(Vector2D a, int i)
                 {
                     //Importante: la coordenda y se mantiene constante en este tipo de movimiento (al ser una torre)
                     if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == a.y)
-                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                    {
+                        if ((posx == distx) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                            return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                        else
+                            return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                    }
                 }
             }
             return true; //Si es correcto, SÍ valida el movimiento.
@@ -304,7 +314,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posy = disty + 1; posy < 0; posy++) //Itera tantas veces como huecos hay entre inicio y destino
+            for (int posy = -1 ; posy >= disty; posy--) //Itera tantas veces como huecos hay entre inicio y destino
             {
                 int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
 
@@ -312,7 +322,12 @@ bool listapiezas::validar_torre(Vector2D a, int i)
                 {
                     //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
                     if (lista_piezas[j]->posicion.y == coordenada_y && lista_piezas[j]->posicion.x == a.x)
-                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                    {
+                        if ((posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                            return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                        else
+                            return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                    }
                 }
             }
             return true; //Si es correcto, SÍ valida el movimiento.
@@ -327,7 +342,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
         }
         else
         {
-            for (int posx = distx + 1; posx < 0; posx++) //Itera tantas veces como huecos hay entre inicio y destino
+            for (int posx = -1; posx >= distx; posx--) //Itera tantas veces como huecos hay entre inicio y destino
             {
                 int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
 
@@ -335,7 +350,12 @@ bool listapiezas::validar_torre(Vector2D a, int i)
                 {
                     //Importante: la coordenda x se mantiene constante en este tipo de movimiento (al ser una torre)
                     if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == a.y)
-                        return false; //Si hay alguna pieza en una de las posiciones intermedias, NO valida el movimiento.
+                    {
+                        if ((posx == distx) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                            return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                        else
+                            return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                    }
                 }
             }
             return true; //Si es correcto, SÍ valida el movimiento.
@@ -344,7 +364,7 @@ bool listapiezas::validar_torre(Vector2D a, int i)
    
 }
 
-//Ya NO salta piezas
+//YA ESTARÍA IMPLEMENTADA PARA JAQUE
 bool listapiezas::validar_alfil(Vector2D a, int i)
 {
 
@@ -356,9 +376,9 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         //Movimiento en el primer cuadrante (X hacia la derecha, Y hacia arriba)
         if (distx > 0 && disty > 0)
         {
-            for (int posx = distx - 1; posx > 0; posx--)
+            for (int posx = 1; posx <= distx; posx++)
             {
-                for (int posy = disty - 1; posy > 0; posy--)
+                for (int posy = 1; posy <= disty; posy++)
                 {
                     if (abs(posx) == abs(posy))
                     {
@@ -367,7 +387,12 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
                             if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
-                                return false;
+                            {
+                                if ((posx == distx) && (posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                                else
+                                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                            }
                         }
                     }
                 }
@@ -377,9 +402,9 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         //Movimiento en el segundo cuadrante (X hacia la iquierda, Y hacia arriba)
         else if (distx < 0 && disty > 0)
         {
-            for (int posx = distx + 1; posx < 0; posx++)
+            for (int posx = - 1; posx >= distx; posx--)
             {
-                for (int posy = disty - 1; posy > 0; posy--)
+                for (int posy = 1; posy <= disty; posy++)
                 {
                     if (abs(posx) == abs(posy))
                     {
@@ -388,7 +413,12 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
                             if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
-                                return false;
+                            {
+                                if ((posx == distx) && (posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                                else
+                                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                            }
                         }
                     }
                 }
@@ -398,9 +428,9 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         //Movimiento en el tercer cuadrante (X hacia la izquierda, Y hacia abajo)
         else if (distx < 0 && disty < 0)
         {
-            for (int posx = distx + 1; posx < 0; posx++)
+            for (int posx = -1; posx >= distx; posx--)
             {
-                for (int posy = disty + 1; posy < 0; posy++)
+                for (int posy = -1; posy >= disty; posy--)
                 {
                     if (abs(posx) == abs(posy))
                     {
@@ -409,7 +439,12 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
                             if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
-                                return false;
+                            {
+                                if ((posx == distx) && (posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                                else
+                                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                            }
                         }
                     }
                 }
@@ -419,9 +454,9 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
         //Movimiento en el cuarto cuadrante (X hacia la derecha, Y hacia abajo)
         else if (distx > 0 && disty < 0)
         {
-            for (int posx = distx - 1; posx > 0; posx--)
+            for (int posx = 1; posx <= distx; posx++)
             {
-                for (int posy = disty + 1; posy < 0; posy++)
+                for (int posy = -1; posy >= disty; posy--)
                 {
                     if (abs(posx) == abs(posy))
                     {
@@ -430,7 +465,12 @@ bool listapiezas::validar_alfil(Vector2D a, int i)
                         for (int j = 0; j < numero_p; j++) //Recorremos TODAS las piezas
                         {
                             if (lista_piezas[j]->posicion.x == coordenada_x && lista_piezas[j]->posicion.y == coordenada_y)
-                                return false;
+                            {
+                                if ((posx == distx) && (posy == disty) && (lista_piezas[j]->color != lista_piezas[i]->color))
+                                    return true; //Si en la posicion final hay una pieza de distinto color, nos la podemos comer
+                                else
+                                    return false; //Si hay una pieza en una de las posiciones intermedias, NO nos podemos mover.
+                            }
                         }
                     }
                 }
