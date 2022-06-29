@@ -2,8 +2,8 @@
 #include<iostream>
 #include "freeglut.h"
 
-//Las ponemos aquí porque en el .h no son realmente necesarias
-//No son necesarias en la declaración de los métodos de ListaPiezas, pero sí en su definición. 
+//Las ponemos aquÃ­ porque en el .h no son realmente necesarias
+//No son necesarias en la declaraciÃ³n de los mÃ©todos de ListaPiezas, pero sÃ­ en su definiciÃ³n. 
 #include "peon.h"
 #include "Torre.h"
 #include "Alfil.h"
@@ -64,15 +64,9 @@ void ListaPiezas::mover(int h)
 
 
     //se revisa si se puede mover
-    //if (!pieza->validar_movimiento(a, this))
-    //      return;
-
+    if (!pieza->validar_movimiento(a, this))
+        return; //No valida, no se mueve
     
-    if (h < 28)//0 a 15 es un peon
-    {
-        if (!pieza->validar_movimiento(a, this))
-            return; //No valida, no se mueve
-    }
     //if (h > 15 && h < 20)// 16 a 19 es una torre
     //    val = validar_torre(a, h);
     //if (h > 19 && h < 24)//20 a 23 es un alfil
@@ -216,7 +210,7 @@ void ListaPiezas::destruir(int i)
 
 bool ListaPiezas::es_blanca(int i)
 {
-    if (lista_piezas[i]->color == 255) //Me da error aquí!!!!
+    if (lista_piezas[i]->color == 255) //Me da error aquÃ­!!!!
         return true;
     else
         return false;
@@ -225,7 +219,7 @@ bool ListaPiezas::es_blanca(int i)
 
 //Implementados en la propia pieza: peon, torre, alfil, rey, reina, caballo
 //NO borramos estos porque sino NO funciona jaque
-//YA ESTÁ IMPLEMENTADA PARA JAQUE
+//YA ESTÃ IMPLEMENTADA PARA JAQUE
 bool ListaPiezas::validar_peon(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
@@ -237,7 +231,7 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
         //Avance 2 vertical (solo primer movimiento)
         if (distx == 0 && disty == 2 && lista_piezas[i]->posicion.y == 2)
         {
-            //El peón NO puede comer hacia adelante.
+            //El peÃ³n NO puede comer hacia adelante.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if ((lista_piezas[j]->posicion.y == a.y - 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
@@ -247,11 +241,11 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
         //Avance 1 vertical
         else if (distx == 0 && disty == 1)
         {
-            //El peón NO puede comer hacia adelante.
+            //El peÃ³n NO puede comer hacia adelante.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
-                    return false; //Si hay alguna pieza en la posición final, NO valida el movimiento.
+                    return false; //Si hay alguna pieza en la posiciÃ³n final, NO valida el movimiento.
             }
             return true;
         }
@@ -262,7 +256,7 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x && !es_blanca(j))
-                    return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
+                    return true; //Si hay alguna pieza en la posiciÃ³n de destino, SÃ valida el movimiento.
             }
             return false;
         }
@@ -275,7 +269,7 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
         //Avance 2 vertical (solo primer movimiento)
         if (distx == 0 && disty == -2 && lista_piezas[i]->posicion.y == 7)
         {
-            //El peón NO puede comer hacia adelante.
+            //El peÃ³n NO puede comer hacia adelante.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if ((lista_piezas[j]->posicion.y == a.y + 1 || lista_piezas[j]->posicion.y == a.y) && lista_piezas[j]->posicion.x == a.x)
@@ -285,11 +279,11 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
         //Avance 1 vertical
         else if (distx == 0 && disty == -1)
         {
-            //El peón NO puede comer hacia adelante.
+            //El peÃ³n NO puede comer hacia adelante.
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x)
-                    return false; //Si hay alguna pieza en la posición final, NO valida el movimiento.
+                    return false; //Si hay alguna pieza en la posiciÃ³n final, NO valida el movimiento.
             }
             return true;
         }
@@ -300,7 +294,7 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
             for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
             {
                 if (lista_piezas[j]->posicion.y == a.y && lista_piezas[j]->posicion.x == a.x && es_blanca(j))
-                    return true; //Si hay alguna pieza en la posición de destino, SÍ valida el movimiento.
+                    return true; //Si hay alguna pieza en la posiciÃ³n de destino, SÃ valida el movimiento.
             }
             return false;
         }
@@ -309,7 +303,7 @@ bool ListaPiezas::validar_peon(Vector2D a, int i)
     }
 }
 
-//YA ESTARÍA IMPLEMENTADA PARA JAQUE
+//YA ESTARÃA IMPLEMENTADA PARA JAQUE
 bool ListaPiezas::validar_torre(Vector2D a, int i)
 {
     int distx = a.x - lista_piezas[i]->posicion.x;
@@ -326,7 +320,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
         {
             for (int posy = 1; posy <= disty; posy++) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué coordenada corresponde posy?
+                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: Â¿A quÃ© coordenada corresponde posy?
 
                 for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
                 {
@@ -340,7 +334,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
                     }
                 }
             }
-            return true; //Si es correcto, SÍ valida el movimiento.
+            return true; //Si es correcto, SÃ valida el movimiento.
         }
     }
     //Movimiento horizontal hacia la derecha (positivo). Por ejemplo: Desde (1,3) hasta (5,3)
@@ -354,7 +348,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
         {
             for (int posx = 1; posx <= distx; posx++) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: Â¿A quÃ© cootrdenada corresponde posy?
 
                 for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
                 {
@@ -368,7 +362,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
                     }
                 }
             }
-            return true; //Si es correcto, SÍ valida el movimiento.
+            return true; //Si es correcto, SÃ valida el movimiento.
         }
     }
     //Movimiento vertical hacia abajo (negativo). Por ejemplo: Desde (1,5) hasta (1,1)
@@ -382,7 +376,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
         {
             for (int posy = -1; posy >= disty; posy--) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+                int coordenada_y = lista_piezas[i]->posicion.y + posy; //Responde a la pregunta: Â¿A quÃ© cootrdenada corresponde posy?
 
                 for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
                 {
@@ -396,7 +390,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
                     }
                 }
             }
-            return true; //Si es correcto, SÍ valida el movimiento.
+            return true; //Si es correcto, SÃ valida el movimiento.
         }
     }
     //Movimiento horizontal hacia la izquierda (negativo). Por ejemplo: Desde (5,3) hasta (1,3)
@@ -410,7 +404,7 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
         {
             for (int posx = -1; posx >= distx; posx--) //Itera tantas veces como huecos hay entre inicio y destino
             {
-                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: ¿A qué cootrdenada corresponde posy?
+                int coordenada_x = lista_piezas[i]->posicion.x + posx; //Responde a la pregunta: Â¿A quÃ© cootrdenada corresponde posy?
 
                 for (int j = 0; j < numero_p; j++) //Recorremos todo el array de las piezas
                 {
@@ -424,13 +418,13 @@ bool ListaPiezas::validar_torre(Vector2D a, int i)
                     }
                 }
             }
-            return true; //Si es correcto, SÍ valida el movimiento.
+            return true; //Si es correcto, SÃ valida el movimiento.
         }
     }
 
 }
 
-//YA ESTARÍA IMPLEMENTADA PARA JAQUE
+//YA ESTARÃA IMPLEMENTADA PARA JAQUE
 bool ListaPiezas::validar_alfil(Vector2D a, int i)
 {
 
