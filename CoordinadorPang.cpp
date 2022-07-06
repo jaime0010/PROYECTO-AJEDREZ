@@ -9,7 +9,7 @@ CoordinadorPang::~CoordinadorPang()
 
 }
 
-void CoordinadorPang::mueve() //Llama a los métodos de clase tablero para pedir las coordenadas y comprobar que hay pieza en ese lugar
+void CoordinadorPang::mueve() //Llama a los mÃ©todos de clase tablero para pedir las coordenadas y comprobar que hay pieza en ese lugar
 {
 	if (estado == EMPEZAR)
 		tab.esta_ocupada(tab.preguntar());
@@ -36,8 +36,15 @@ void CoordinadorPang::dibuja()
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("Bitwise.ttf", 12);
 		ETSIDI::printxy("NOTA:Para usar la consola, pulsar la letra J  ", -7, 13);
+		Beep(330, 100); Sleep(100);
+		Beep(330, 100); Sleep(300);
+		Beep(330, 100); Sleep(300);
+		Beep(262, 100); Sleep(100);
+		Beep(330, 100); Sleep(300);
+		Beep(392, 100); Sleep(700);
+		Beep(196, 100); Sleep(700);
 	}
-	else if (estado == JUEGO) //Duda: Por qué hace lo mismo en JUEGO que en EMPEZAR???
+	else if (estado == JUEGO) //Duda: Por quÃ© hace lo mismo en JUEGO que en EMPEZAR???
 	{
 		tab.dibuja();
 	}
