@@ -5,14 +5,6 @@ class Pieza;
 
 #include "Pieza.h"
 
-//#include "peon.h"
-//#include "Torre.h"
-//#include "Alfil.h"
-//#include "Rey.h"
-//#include "Reina.h"
-//#include "Caballo.h"
-//#include "ETSIDI.h"
-
 #include "ETSIDI.h"
 
 
@@ -21,22 +13,22 @@ class Pieza;
 
 class ListaPiezas
 {
-//private:
-	//Lista que contiene piezas de diferentes tipos
+	//private:
+		//Lista que contiene piezas de diferentes tipos
 	Pieza* lista_piezas[MAX_PIEZAS];
 	//Obtener una referencia a la pieza en la posicion h del array !!!!!!!!!!!!
 	Pieza* obtener(int);
 
 	//Duda
 	int numero_p;
-	//Límites del tablero ??
+	//LÃ­mites del tablero ??
 	int x_fuera_blanca = 11, y_fuera_blanca = 1;
 	int x_fuera_negra = -2.5, y_fuera_negra = 1;
 
 public:
 	//Constructor
 	ListaPiezas(); //Constructor
-	//Obtener una referencia a la pieza según unas coordenadas
+	//Obtener una referencia a la pieza segÃºn unas coordenadas
 	Pieza* obtener(Vector2D);
 
 	//Duda
@@ -60,28 +52,7 @@ public:
 	//Duda
 	bool es_blanca(int);
 
-	//La fucnión validar es PROPIA de cada tipo concreto de pieza
+	bool jaque_total(Vector2D, Pieza*);
 
-	bool validar_peon(Vector2D,int);
-
-	bool validar_torre(Vector2D, int);
-
-	bool validar_alfil(Vector2D, int);
-
-	bool validar_rey(Vector2D, int);
-
-	bool validar_reina(Vector2D, int);
-
-	bool validar_caballo(Vector2D, int);
-
-	//No se si jaque mate también debería de ser propia del REY ???
-
-	bool jaque_negro();
-
-	bool jaquemate_negro();
-
-	bool jaque_blanco();
-
-	bool jaquemate_blanco();
-
+	bool jaque_mate_total(Pieza*, Pieza*);
 };
