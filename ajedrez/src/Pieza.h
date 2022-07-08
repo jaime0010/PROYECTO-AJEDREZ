@@ -9,22 +9,22 @@ class ListaPiezas;
 class Pieza
 {
 protected:
-	bool blanca;
+	//bool blanca;
 	//Vector2D posicion; //creo que debe ser protected!!!!
 public:
 	//Atributos
 	Vector2D posicion;
 	float radio;
-	int color;
+	bool blanca;
 
 
 	//Constructor
-	Pieza(Vector2D, float, int);
+	Pieza(Vector2D, float, bool);
 
 
-	//Métodos
-	virtual void dibuja() = 0; //Método virtual puro -> Pieza == clase abstracta (no instancia concreta)
-	virtual bool validar_movimiento(Vector2D, ListaPiezas*) = 0; //Método virtual puro -> Pieza == clase abstracta (no instancia concreta)
+	//MÃ©todos
+	virtual void dibuja() = 0; //MÃ©todo virtual puro -> Pieza == clase abstracta (no instancia concreta)
+	virtual bool validar_movimiento(Vector2D, ListaPiezas*) = 0; //MÃ©todo virtual puro -> Pieza == clase abstracta (no instancia concreta)
 	bool mismo_color(Pieza*);
 
 };
