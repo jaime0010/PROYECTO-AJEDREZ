@@ -13,7 +13,7 @@ void Caballo::dibuja()
     j = (int)posicion.x % 2;
     k = (int)posicion.y % 2;
 
-    if (color == 0)
+    if (blanca == false)
     {
 
         if (j == 0)
@@ -48,12 +48,12 @@ void Caballo::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(0,0,0);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
-    if (color == 255)
+    else if (blanca == true)
     {
 
         if (j == 0)
@@ -87,16 +87,12 @@ void Caballo::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
 
     }
-    glColor3ub(color, color, color);
-    glTranslatef(posicion.x, posicion.y, 0);
-    //glutWireCube(radio);
-    glTranslatef(-posicion.x, -posicion.y, 0);
 
 }
 
