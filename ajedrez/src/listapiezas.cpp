@@ -2,8 +2,8 @@
 #include<iostream>
 #include "freeglut.h"
 
-//Las ponemos aquÌ porque en el .h no son realmente necesarias
-//No son necesarias en la declaraciÛn de los mÈtodos de ListaPiezas, pero sÌ en su definiciÛn. 
+//Las ponemos aqu√≠ porque en el .h no son realmente necesarias
+//No son necesarias en la declaraci√≥n de los m√©todos de ListaPiezas, pero s√≠ en su definici√≥n. 
 #include "peon.h"
 #include "Torre.h"
 #include "Alfil.h"
@@ -47,41 +47,33 @@ Pieza* ListaPiezas::obtener(int h)
 
 void ListaPiezas::mover(int h)
 {
-    bool val = true;
     Vector2D a;
     cout << "donde la quieres mover " << endl;  cin >> a.x >> a.y;
-    //Partida es el que recibe la info del usuario
+    //El usuario introduce la posici√≥n de destino
 
     if (a.x <= 0 || a.x >= 9 || a.y <= 0 || a.y >= 9) //Si la coordenada de la pieza de destino no existe, no valida.
     {
         return;
     }
-    Pieza* pieza = obtener(h);
+    Pieza* pieza = obtener(h); //Obtengo la pieza que hay en esa posicion del array
     if (pieza == NULL)
     {
         return;
     }
 
-
-    //Se revisa si se puede mover la pieza a travÈs de su mÈtodo validar_movimiento
+    //Se revisa si se puede mover la pieza a trav√©s de su m√©todo validar_movimiento
     if (pieza->validar_movimiento(a, this))
     {
         int k = donde_esta(a);
-        if (k < numero_p)//Si hay una pieza donde nos queremos mover, emite sonido
+        if (k < numero_p)//Si hay una pieza donde nos queremos mover, emite sonido y se come a la pieza
         {
-            ETSIDI::play("sonidos/comer.wav");
-            destruir(k);
-            lista_piezas[h]->posicion.x = a.x;
-            lista_piezas[h]->posicion.y = a.y;
+            ETSIDI::play("sonidos/comer.wav"); //Sonido
+            destruir(k); //Comer pieza
         }
-        else if (k == numero_p)//Si no detecta ninguna pieza, 
-        {
-            lista_piezas[h]->posicion.x = a.x;
-            lista_piezas[h]->posicion.y = a.y;
-        }
+        pieza->posicion = a; //Mueve la pieza a la posici√≥n final
     }
     else
-        cout << "movimineto invalido" << endl;
+        cout << "¬°Movimiento no valido!\n" << endl;
 
 
 
@@ -94,13 +86,13 @@ void ListaPiezas::mover(int h)
         bool jq_b = jaque_total(lista_piezas[24]->posicion, lista_piezas[i]);//usamos la poscion del rey blanco(24) y las distintas piezas negras
         if (jq_b)
         {
-            cout << "estas en jaque, mueve el rey blanco" << endl;
+            cout << "¬°Estas en jaque! Mueve el rey blanco.\n" << endl;
             for (i = 1; i < 32; i += 2)
             {
                 if (jaque_mate_total(lista_piezas[24], lista_piezas[i]))
                 {
                     ETSIDI::play("sonidos/game_over.mp3");
-                    cout << endl << "HAS PERDIDO blanco";
+                    cout << endl << "¬°Ha ganado el jugador NEGRO!\n";
                     exit(1);
                 }
             }
@@ -111,13 +103,13 @@ void ListaPiezas::mover(int h)
         bool jq_n = jaque_total(lista_piezas[25]->posicion, lista_piezas[i]);//usamos la poscion del rey negro(25) y las distintas piezas blancas
         if (jq_n)
         {
-            cout << "estas en jaque, mueve el rey negro" << endl;
+            cout << "¬°Estas en jaque! Mueve el rey negro.\n" << endl;
             for (i = 0; i < 32; i += 2)
             {
                 if (jaque_mate_total(lista_piezas[25], lista_piezas[i]))
                 {
                     ETSIDI::play("sonidos/game_over.mp3");
-                    cout << endl << "HAS PERDIDO NEGRO";
+                    cout << endl << "¬°Ha ganado el jugador BLANCO!\n";
                     exit(1);
                 }
             }
@@ -175,7 +167,7 @@ bool ListaPiezas::hay_pieza(Vector2D a)
     for (int i = 0; i < numero_p; i++)
     {
         Vector2D posicion = lista_piezas[i]->posicion;
-        if (posicion == a) //Revisamos la posiciÛn de todas las piezas
+        if (posicion == a) //Revisamos la posici√≥n de todas las piezas
         {
             return true;
         }
@@ -192,10 +184,8 @@ void ListaPiezas::destruir(int i)
             x_fuera_blanca = 12;
             y_fuera_blanca = 1;
         }
-
-
-        lista_piezas[i]->posicion.x = x_fuera_blanca;
-        lista_piezas[i]->posicion.y = y_fuera_blanca;
+        Vector2D fuera_blanca = Vector2D(x_fuera_blanca, y_fuera_blanca);
+        lista_piezas[i]->posicion = fuera_blanca;
         y_fuera_blanca++;
     }
     else
@@ -205,17 +195,15 @@ void ListaPiezas::destruir(int i)
             x_fuera_negra = -3.5;
             y_fuera_negra = 1;
         }
-
-
-        lista_piezas[i]->posicion.x = x_fuera_negra;
-        lista_piezas[i]->posicion.y = y_fuera_negra;
+        Vector2D fuera_negra = Vector2D(x_fuera_negra, y_fuera_negra);
+        lista_piezas[i]->posicion = fuera_negra;
         y_fuera_negra++;
     }
 }
 
 bool ListaPiezas::es_blanca(int i)
 {
-    if (lista_piezas[i]->color == 255) //Me da error aquÌ!!!!
+    if (lista_piezas[i]->color == 255) //Me da error aqu√≠!!!!
         return true;
     else
         return false;
@@ -234,14 +222,13 @@ bool ListaPiezas::jaque_mate_total(Pieza* rey, Pieza* pieza)
 {
     int i = 0;
     int m, n, suma1 = 0, suma2 = 0, tocado = 0;
-    Vector2D posible;
 
     for (m = -1; m <= 1; m++)
     {
         for (n = -1; n <= 1; n++)
         {
-            posible.x = rey->posicion.x + m;
-            posible.y = rey->posicion.y + n;//generamos las posiciones posibles a las que se puede mover un rey
+            Vector2D mn = Vector2D(m, n);
+            Vector2D posible = rey->posicion + mn; //generamos las posiciones posibles a las que se puede mover un rey
             if (posible.x > 0 && posible.x < 9 && posible.y>0 && posible.y < 9)//si la casilla generado esta en el tablero
             {
                 if (rey->validar_movimiento(posible, this))//validamos si el rey se puede mover a esa casilla
