@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Rey::Rey(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
+Rey::Rey(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
 {
 
 }
@@ -13,7 +13,7 @@ void Rey::dibuja()
     j = (int)posicion.x % 2;
     k = (int)posicion.y % 2;
 
-    if (color == 0)
+    if (blanca == false)
     {
         if (j == 0)
         {
@@ -46,12 +46,12 @@ void Rey::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(0,0,0);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
-    if (color == 255)
+    else if (blanca == true)
     {
         if (j == 0)
         {
@@ -85,24 +85,19 @@ void Rey::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
 
     }
-    glColor3ub(color, color, color);
-    glTranslatef(posicion.x, posicion.y, 0);
-    // glutWireTeapot(radio);
-    glTranslatef(-posicion.x, -posicion.y, 0);
-
 }
 
 bool Rey::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
 {
     Vector2D d = p_fin - posicion; //Vector2D: operador - sobrecargado
     Vector2D dist = d.abs_v();
-    Vector2D lim_desplaz = Vector2D(2, 2); //Puede moverse 0 o 1 en cada dirección. Fijarse en el if
+    Vector2D lim_desplaz = Vector2D(2, 2); //Puede moverse 0 o 1 en cada direcciÃ³n. Fijarse en el if
     Pieza* presa = lista->obtener(p_fin);
 
     if (dist < lim_desplaz)
