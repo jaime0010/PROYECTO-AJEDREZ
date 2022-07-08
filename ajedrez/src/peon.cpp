@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-Peon::Peon(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
+Peon::Peon(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
 {
 
 }
@@ -10,10 +10,10 @@ Peon::Peon(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
 void Peon::dibuja()
 {
     int k, j;
-    j = (int)posicion.x % 2; //Posici髇 x: si es par, 0; si es impar, 1;
-    k = (int)posicion.y % 2; //Posici髇 y: si es par, 0; si es impar, 1;
+    j = (int)posicion.x % 2; //Posici贸n x: si es par, 0; si es impar, 1;
+    k = (int)posicion.y % 2; //Posici贸n y: si es par, 0; si es impar, 1;
 
-    if (color == 0) //Peones Blancos
+    if (blanca == false) //Peones Negros
     {
         if (j == 0)
         {
@@ -44,12 +44,12 @@ void Peon::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(0,0,0);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
-    else if (color == 255) //Peones Negros
+    else if (blanca == true) //Peones Blancos
     {
         if (j == 0)
         {
@@ -82,7 +82,7 @@ void Peon::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
@@ -94,10 +94,10 @@ bool Peon::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
 {
     Vector2D dist = p_fin - posicion; //Vector2D: operador - sobrecargado
 
-    //Distinci髇 entre peones blancos y negros
-    //Tambi閚 filtramos aquellos movimientos que vayan en el sentido INCORRECTO
+    //Distinci贸n entre peones blancos y negros
+    //Tambi茅n filtramos aquellos movimientos que vayan en el sentido INCORRECTO
     int pos_inicial, pos_intermedia;
-    if (color == 255) //Peones Blancos                                                          //ponerlo bool
+    if (blanca == true) //Peones Blancos
     {
         pos_inicial = 2; //Todos los peones blancos empiezan en esta fila
         pos_intermedia = 3;
@@ -115,8 +115,8 @@ bool Peon::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
     //Avance de dos casillas vertical (solo primer movimiento).
     if (dist.x == 0 && abs(dist.y) == 2 && posicion.y == pos_inicial) //pos_inicial y |dist.y|: la criba de color se ha hecho antes.
     {
-        //El pe髇 NO puede comer hacia adelante, ni saltar piezas.
-        Vector2D adelante = Vector2D(posicion.x, pos_intermedia); //Casilla intermedia. Tambi閚 determinada anteriormente por el color
+        //El pe贸n NO puede comer hacia adelante, ni saltar piezas.
+        Vector2D adelante = Vector2D(posicion.x, pos_intermedia); //Casilla intermedia. Tambi茅n determinada anteriormente por el color
         if (lista->hay_pieza(adelante) || lista->hay_pieza(p_fin))
             return false; //Si hay alguna pieza en la posicion final o intermedia, NO valida el movimiento.
         else
@@ -125,9 +125,9 @@ bool Peon::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
     //Avance unitario vertical
     else if (dist.x == 0 && abs(dist.y) == 1) //|dist.y|: la criba de color se ha hecho antes.
     {
-        //El pe髇 NO puede comer hacia adelante.
+        //El pe贸n NO puede comer hacia adelante.
         if (lista->hay_pieza(p_fin))
-            return false; //Si hay alguna pieza en la posici髇 final, NO valida el movimiento.
+            return false; //Si hay alguna pieza en la posici贸n final, NO valida el movimiento.
         else
             return true;
     }
