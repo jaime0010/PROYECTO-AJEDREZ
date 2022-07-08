@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-Torre::Torre(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
+Torre::Torre(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
 {
 
 }
@@ -13,7 +13,7 @@ void Torre::dibuja()
     j = (int)posicion.x % 2;
     k = (int)posicion.y % 2;
 
-    if (color == 0)
+    if (blanca == false)
     {
 
         if (j == 0)
@@ -47,12 +47,12 @@ void Torre::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(0,0,0);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
-    if (color == 255)
+    else if (blanca == true)
     {
 
         if (j == 0)
@@ -87,16 +87,12 @@ void Torre::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
 
     }
-    glColor3ub(color, color, color);
-    glTranslatef(posicion.x, posicion.y, 0);
-    // glutSolidCube(radio);
-    glTranslatef(-posicion.x, -posicion.y, 0);
 }
 
 bool Torre::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
@@ -116,18 +112,18 @@ bool Torre::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
             {
                 Vector2D pos = Vector2D(0, posy);
                 Vector2D posiciones = posicion + pos; //Vector posiciones (de intermedia a final)
-                //int coordenada_y = posicion.y + posy; //Responde a la pregunta: øA quÈ coordenada y corresponde posy?
+                //int coordenada_y = posicion.y + posy; //Responde a la pregunta: ¬øA qu√© coordenada y corresponde posy?
                 //Vector2D posiciones = Vector2D(posicion.x, coordenada_y); 
                 Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                 //Criterios:
-                //No se pueden saltar piezas: solo puede haber piezas en la posiciÛn final:
-                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posiciÛn && esa posiciÛn no es la final
+                //No se pueden saltar piezas: solo puede haber piezas en la posici√≥n final:
+                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici√≥n && esa posici√≥n no es la final
                     return false;
-                //Comer: en caso de haber pieza en la posiciÛn final, esta ha de ser de distinto color:
+                //Comer: en caso de haber pieza en la posici√≥n final, esta ha de ser de distinto color:
                 else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                     return false;
             }
-            return true; //Si es correcto, SÕ valida el movimiento.
+            return true; //Si es correcto, S√ç valida el movimiento.
         }
     }
     //Movimiento horizontal hacia la derecha (positivo). Por ejemplo: Desde (1,3) hasta (5,3)
@@ -143,18 +139,18 @@ bool Torre::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
             {
                 Vector2D pos = Vector2D(posx, 0);
                 Vector2D posiciones = posicion + pos; //Vector posiciones (de intermedia a final)
-                //int coordenada_x = posicion.x + posx; //Responde a la pregunta: øA quÈ coordenada y corresponde posy?
+                //int coordenada_x = posicion.x + posx; //Responde a la pregunta: ¬øA qu√© coordenada y corresponde posy?
                 //Vector2D posiciones = Vector2D(coordenada_x, posicion.y); //Vector posiciones (de intermedia a final)
                 Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                 //Criterios:
-                //No se pueden saltar piezas: solo puede haber piezas en la posiciÛn final:
-                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posiciÛn && esa posiciÛn no es la final
+                //No se pueden saltar piezas: solo puede haber piezas en la posici√≥n final:
+                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici√≥n && esa posici√≥n no es la final
                     return false;
-                //Comer: en caso de haber pieza en la posiciÛn final, esta ha de ser de distinto color:
+                //Comer: en caso de haber pieza en la posici√≥n final, esta ha de ser de distinto color:
                 else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                     return false;
             }
-            return true; //Si es correcto, SÕ valida el movimiento.
+            return true; //Si es correcto, S√ç valida el movimiento.
         }
     }
     //Movimiento vertical hacia abajo (negativo). Por ejemplo: Desde (1,5) hasta (1,1)
@@ -170,18 +166,18 @@ bool Torre::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
             {
                 Vector2D pos = Vector2D(0, posy);
                 Vector2D posiciones = posicion + pos; //Vector posiciones (de intermedia a final)
-                //int coordenada_y = posicion.y + posy; //Responde a la pregunta: øA quÈ coordenada y corresponde posy?
+                //int coordenada_y = posicion.y + posy; //Responde a la pregunta: ¬øA qu√© coordenada y corresponde posy?
                 //Vector2D posiciones = Vector2D(posicion.x, coordenada_y); //Vector posiciones (de intermedia a final)
                 Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                 //Criterios:
-                //No se pueden saltar piezas: solo puede haber piezas en la posiciÛn final:
-                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posiciÛn && esa posiciÛn no es la final
+                //No se pueden saltar piezas: solo puede haber piezas en la posici√≥n final:
+                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici√≥n && esa posici√≥n no es la final
                     return false;
-                //Comer: en caso de haber pieza en la posiciÛn final, esta ha de ser de distinto color:
+                //Comer: en caso de haber pieza en la posici√≥n final, esta ha de ser de distinto color:
                 else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                     return false;
             }
-            return true; //Si es correcto, SÕ valida el movimiento.
+            return true; //Si es correcto, S√ç valida el movimiento.
         }
     }
     //Movimiento horizontal hacia la izquierda (negativo). Por ejemplo: Desde (5,3) hasta (1,3)
@@ -197,18 +193,18 @@ bool Torre::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
             {
                 Vector2D pos = Vector2D(posx, 0);
                 Vector2D posiciones = posicion + pos; //Vector posiciones (de intermedia a final)
-                //int coordenada_x = posicion.x + posx; //Responde a la pregunta: øA quÈ coordenada y corresponde posy?
+                //int coordenada_x = posicion.x + posx; //Responde a la pregunta: ¬øA qu√© coordenada y corresponde posy?
                 //Vector2D posiciones = Vector2D(coordenada_x, posicion.y); //Vector posiciones (de intermedia a final)
                 Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                 //Criterios:
-                //No se pueden saltar piezas: solo puede haber piezas en la posiciÛn final:
-                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posiciÛn && esa posiciÛn no es la final
+                //No se pueden saltar piezas: solo puede haber piezas en la posici√≥n final:
+                if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici√≥n && esa posici√≥n no es la final
                     return false;
-                //Comer: en caso de haber pieza en la posiciÛn final, esta ha de ser de distinto color:
+                //Comer: en caso de haber pieza en la posici√≥n final, esta ha de ser de distinto color:
                 else if (lista->hay_pieza(posiciones) && (pos == dist) && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                     return false;
             }
-            return true; //Si es correcto, SÕ valida el movimiento.
+            return true; //Si es correcto, S√ç valida el movimiento.
         }
     }
     else
