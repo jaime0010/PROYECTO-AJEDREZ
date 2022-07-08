@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Alfil::Alfil(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
+Alfil::Alfil(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
 {
 
 }
@@ -13,7 +13,7 @@ void Alfil::dibuja()
     j = (int)posicion.x % 2;
     k = (int)posicion.y % 2;
 
-    if (color == 0)
+    if (blanca == false)
     {
 
         if (j == 0)
@@ -47,12 +47,12 @@ void Alfil::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(0, 0, 0);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
-    if (color == 255)
+    else if (blanca == true)
     {
 
 
@@ -88,18 +88,12 @@ void Alfil::dibuja()
 
         //Liberar memoria de la textura
         glBindTexture(GL_TEXTURE_2D, 0);
-        glColor3ub(color, color, color);
+        glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
         //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
 
     }
-
-    glColor3ub(color, color, color);
-    glTranslatef(posicion.x, posicion.y, 0);
-    // glutSolidTorus(0.1, radio, 100, 100);
-
-    glTranslatef(-posicion.x, -posicion.y, 0);
 
 }
 
@@ -123,10 +117,10 @@ bool Alfil::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
                         Vector2D posiciones = posicion + pos; //Vector2D: operador - sobrecargado
                         Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                         //Criterios:
-                        //No se pueden saltar piezas: solo puede haber piezas en la posici髇 final:
-                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici髇 && esa posici髇 no es la final
+                        //No se pueden saltar piezas: solo puede haber piezas en la posici贸n final:
+                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici贸n && esa posici贸n no es la final
                             return false;
-                        //Comer: en caso de haber pieza en la posici髇 final, esta ha de ser de distinto color:
+                        //Comer: en caso de haber pieza en la posici贸n final, esta ha de ser de distinto color:
                         else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                             return false;
                     }
@@ -148,10 +142,10 @@ bool Alfil::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
                         Vector2D posiciones = posicion + pos; //Vector2D: operador - sobrecargado
                         Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                         //Criterios:
-                        //No se pueden saltar piezas: solo puede haber piezas en la posici髇 final:
-                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici髇 && esa posici髇 no es la final
+                        //No se pueden saltar piezas: solo puede haber piezas en la posici贸n final:
+                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici贸n && esa posici贸n no es la final
                             return false;
-                        //Comer: en caso de haber pieza en la posici髇 final, esta ha de ser de distinto color:
+                        //Comer: en caso de haber pieza en la posici贸n final, esta ha de ser de distinto color:
                         else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                             return false;
                     }
@@ -173,10 +167,10 @@ bool Alfil::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
                         Vector2D posiciones = posicion + pos; //Vector2D: operador - sobrecargado
                         Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                         //Criterios:
-                        //No se pueden saltar piezas: solo puede haber piezas en la posici髇 final:
-                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici髇 && esa posici髇 no es la final
+                        //No se pueden saltar piezas: solo puede haber piezas en la posici贸n final:
+                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici贸n && esa posici贸n no es la final
                             return false;
-                        //Comer: en caso de haber pieza en la posici髇 final, esta ha de ser de distinto color:
+                        //Comer: en caso de haber pieza en la posici贸n final, esta ha de ser de distinto color:
                         else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                             return false;
                     }
@@ -198,10 +192,10 @@ bool Alfil::validar_movimiento(Vector2D p_fin, ListaPiezas* lista)
                         Vector2D posiciones = posicion + pos; //Vector2D: operador - sobrecargado
                         Pieza* presa = lista->obtener(posiciones); //Obtiene posible pieza en las posiciones (de intermedia a final)
                         //Criterios:
-                        //No se pueden saltar piezas: solo puede haber piezas en la posici髇 final:
-                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici髇 && esa posici髇 no es la final
+                        //No se pueden saltar piezas: solo puede haber piezas en la posici贸n final:
+                        if (lista->hay_pieza(posiciones) && !(pos == dist)) //Hay pieza en esa posici贸n && esa posici贸n no es la final
                             return false;
-                        //Comer: en caso de haber pieza en la posici髇 final, esta ha de ser de distinto color:
+                        //Comer: en caso de haber pieza en la posici贸n final, esta ha de ser de distinto color:
                         else if (lista->hay_pieza(posiciones) && pos == dist && mismo_color(presa)) //Hay pieza en posicion final && Mismo color
                             return false;
                     }
