@@ -21,9 +21,9 @@ void Tablero::inicializa()
     {
         Vector2D coloca_blanca = Vector2D(i, 2);
         Vector2D coloca_negra = Vector2D(i, 7);
-        Peon* aux = new Peon(coloca_blanca, 0.25, 255);//blancos
+        Peon* aux = new Peon(coloca_blanca, 0.25, true);//blancos
         piezas.agregar(aux);//esto lo agregas
-        Peon* aux1 = new Peon(coloca_negra, 0.25, 0);//negros
+        Peon* aux1 = new Peon(coloca_negra, 0.25, false);//negros
         piezas.agregar(aux1);//esto lo agregas
     }
     for (int i = 1; i < 9; i++)//torres
@@ -32,9 +32,9 @@ void Tablero::inicializa()
         {
             Vector2D coloca_blanca = Vector2D(i, 1);
             Vector2D coloca_negra = Vector2D(i, 8);
-            Torre* aux = new Torre(coloca_blanca, 0.25, 255);//blancas
+            Torre* aux = new Torre(coloca_blanca, 0.25, true);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Torre* aux1 = new Torre(coloca_negra, 0.25, 0);//negras
+            Torre* aux1 = new Torre(coloca_negra, 0.25, false);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
@@ -44,9 +44,9 @@ void Tablero::inicializa()
         {
             Vector2D coloca_blanca = Vector2D(i, 1);
             Vector2D coloca_negra = Vector2D(i, 8);
-            Alfil* aux = new Alfil(coloca_blanca, 0.25, 255);//blancas
+            Alfil* aux = new Alfil(coloca_blanca, 0.25, true);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Alfil* aux1 = new Alfil(coloca_negra, 0.25, 0);//negras
+            Alfil* aux1 = new Alfil(coloca_negra, 0.25, false);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
@@ -56,9 +56,9 @@ void Tablero::inicializa()
         {
             Vector2D coloca_blanca = Vector2D(i, 1);
             Vector2D coloca_negra = Vector2D(i, 8);
-            Rey* aux = new Rey(coloca_blanca, 0.25, 255);//blancas
+            Rey* aux = new Rey(coloca_blanca, 0.25, true);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Rey* aux1 = new Rey(coloca_negra, 0.25, 0);//negras
+            Rey* aux1 = new Rey(coloca_negra, 0.25, false);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
@@ -68,9 +68,9 @@ void Tablero::inicializa()
         {
             Vector2D coloca_blanca = Vector2D(i, 1);
             Vector2D coloca_negra = Vector2D(i, 8);
-            Reina* aux = new Reina(coloca_blanca, 0.25, 255);//blancas
+            Reina* aux = new Reina(coloca_blanca, 0.25, true);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Reina* aux1 = new Reina(coloca_negra, 0.25, 0);//negras
+            Reina* aux1 = new Reina(coloca_negra, 0.25, false);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
@@ -80,15 +80,15 @@ void Tablero::inicializa()
         {
             Vector2D coloca_blanca = Vector2D(i, 1);
             Vector2D coloca_negra = Vector2D(i, 8);
-            Caballo* aux = new Caballo(coloca_blanca, 0.25, 255);//blancas
+            Caballo* aux = new Caballo(coloca_blanca, 0.25, true);//blancas
             piezas.agregar(aux);//esto lo agregas
-            Caballo* aux1 = new Caballo(coloca_negra, 0.25, 0);//negras
+            Caballo* aux1 = new Caballo(coloca_negra, 0.25, false);//negras
             piezas.agregar(aux1);//esto lo agregas
         }
     }
 }
 
-void Tablero::dibuja() //Dibuja lo que es el tablero en sí (la cuadrícula)
+void Tablero::dibuja() //Dibuja lo que es el tablero en sÃ­ (la cuadrÃ­cula)
 {
 
     int i, j, r, g, b;
@@ -149,7 +149,7 @@ void Tablero::dibuja() //Dibuja lo que es el tablero en sí (la cuadrícula)
     glVertex3f(-3.5, 0.5, 0.0f);
     glEnd();
 
-    //Llama al método dibuja de listapiezas
+    //Llama al mÃ©todo dibuja de listapiezas
     piezas.dibuja();
 }
 
