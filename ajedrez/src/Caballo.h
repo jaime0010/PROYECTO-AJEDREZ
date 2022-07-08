@@ -6,9 +6,9 @@ class Caballo : public Pieza //un Caballo es una Pieza
 public:
 
 	//Constructor
-	Caballo(Vector2D pos, float r, int c);
+	Caballo(Vector2D pos, float r, bool b);
 
-	//Métodos (heredados de la clase Pieza)
+	//MÃ©todos (heredados de la clase Pieza)
 	void dibuja();
 	bool validar_movimiento(Vector2D, ListaPiezas*);
 
