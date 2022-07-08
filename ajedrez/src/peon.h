@@ -6,9 +6,9 @@ class Peon : public Pieza //un Peon es una Pieza
 public:
 
 	//Constructor
-	Peon(Vector2D pos, float r, int c);
+	Peon(Vector2D pos, float r, bool b);
 
-	//Métodos (heredados de la clase Pieza)
+	//MÃ©todos (heredados de la clase Pieza)
 	void dibuja();
 	bool validar_movimiento(Vector2D, ListaPiezas*);
 
