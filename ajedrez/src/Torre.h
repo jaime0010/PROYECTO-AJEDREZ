@@ -6,7 +6,7 @@ class Torre :public Pieza //una Torre es una Pieza
 public:
 
 	//Constructor
-	Torre(Vector2D pos, float r, bool b);
+	Torre(Vector2D pos, bool b);
 
 	//Métodos (heredados de la clase Pieza)
 	void dibuja();
