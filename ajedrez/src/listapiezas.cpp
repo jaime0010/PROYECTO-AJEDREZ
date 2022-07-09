@@ -203,7 +203,7 @@ void ListaPiezas::destruir(int i)
 
 bool ListaPiezas::es_blanca(int i)
 {
-    if (lista_piezas[i]->blanca == true)
+    if (lista_piezas[i]->get_blanca() == true)
         return true;
     else
         return false;
