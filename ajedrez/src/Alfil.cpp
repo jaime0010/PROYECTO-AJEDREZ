@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Alfil::Alfil(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
+Alfil::Alfil(Vector2D pos, bool b) : Pieza(pos, b) //Constructor
 {
 
 }
@@ -90,7 +90,6 @@ void Alfil::dibuja()
         glBindTexture(GL_TEXTURE_2D, 0);
         glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
-        //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
 
     }
