@@ -1,11 +1,10 @@
 #include "Pieza.h"
 #include "freeglut.h"
 
-Pieza::Pieza(Vector2D v, float r, bool b) //Constructor
+Pieza::Pieza(Vector2D v, bool b) //Constructor
 {
 	posicion.x = v.x;
 	posicion.y = v.y;
-	radio = r;
 	blanca = b;
 }
 
