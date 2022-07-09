@@ -2,11 +2,10 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Caballo::Caballo(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
+Caballo::Caballo(Vector2D pos, bool b) : Pieza(pos, b) //Constructor
 {
 
 }
-
 void Caballo::dibuja()
 {
     int k, j;
