@@ -70,7 +70,7 @@ void ListaPiezas::mover(int h)
             ETSIDI::play("sonidos/comer.wav"); //Sonido
             destruir(k); //Comer pieza
         }
-        pieza->posicion = a; //Mueve la pieza a la posición final
+        pieza->set_posicion(a); //Mueve la pieza a la posición final
     }
     else
         cout << "¡Movimiento no valido!\n" << endl;
@@ -83,7 +83,7 @@ void ListaPiezas::mover(int h)
     Vector2D posible;
     for (i = 1; i < 32; i += 2)//se comprueba si alguna pieza negra se puede mover a la posicion del rey
     {
-        bool jq_b = jaque_total(lista_piezas[24]->posicion, lista_piezas[i]);//usamos la poscion del rey blanco(24) y las distintas piezas negras
+        bool jq_b = jaque_total(lista_piezas[24]->get_posicion(), lista_piezas[i]);//usamos la poscion del rey blanco(24) y las distintas piezas negras
         if (jq_b)
         {
             cout << "¡Estas en jaque! Mueve el rey blanco.\n" << endl;
@@ -100,7 +100,7 @@ void ListaPiezas::mover(int h)
     }
     for (i = 0; i < 32; i += 2)//se comprueba si alguna pieza blanca se puede mover a la posicion del rey
     {
-        bool jq_n = jaque_total(lista_piezas[25]->posicion, lista_piezas[i]);//usamos la poscion del rey negro(25) y las distintas piezas blancas
+        bool jq_n = jaque_total(lista_piezas[25]->get_posicion(), lista_piezas[i]);//usamos la poscion del rey negro(25) y las distintas piezas blancas
         if (jq_n)
         {
             cout << "¡Estas en jaque! Mueve el rey negro.\n" << endl;
@@ -122,25 +122,26 @@ int ListaPiezas::donde_esta(Vector2D a)
 {
     for (int i = 0; i < numero_p; i++)
     {
-        Vector2D posicion = lista_piezas[i]->posicion;
+        //Vector2D posicion = lista_piezas[i]->posicion;
+        Vector2D posicion = lista_piezas[i]->get_posicion();
         if (posicion == a) //Revisamos la posicion de todas las piezas
         {
             if (i < 16)//es un peon
-                cout << "es un peon" << endl;
+                cout << "Es un Peon" << endl;
             if (i > 15 && i < 20)
-                cout << "es una torre" << endl;
+                cout << "Es una Torre" << endl;
             if (i > 19 && i < 24)
-                cout << "es un alfil" << endl;
+                cout << "Es un Alfil" << endl;
             if (i > 23 && i < 26)//24 y 25
-                cout << "es un rey" << endl;
+                cout << "Es un Rey" << endl;
             if (i > 25 && i < 28)//26 y 27 son las reinas
-                cout << "es una reina" << endl;
+                cout << "Es una Reina" << endl;
             if (i > 27 && i < 30)//28, y 29
-                cout << "es un caballo" << endl;
+                cout << "Es un Caballo" << endl;
             if (es_blanca(i))
-                cout << "es blanca" << endl;
+                cout << "Es Blanca" << endl;
             else
-                cout << "es negra" << endl;
+                cout << "Es Negra" << endl;
             return i;
         }
     }
@@ -152,7 +153,7 @@ Pieza* ListaPiezas::obtener(Vector2D a)
 {
     for (int i = 0; i < numero_p; i++)
     {
-        Vector2D posicion = lista_piezas[i]->posicion;
+        Vector2D posicion = lista_piezas[i]->get_posicion();
         if (posicion == a) //Revisamos la posicion de todas las piezas
         {
             return (obtener(i));
@@ -166,7 +167,7 @@ bool ListaPiezas::hay_pieza(Vector2D a)
 {
     for (int i = 0; i < numero_p; i++)
     {
-        Vector2D posicion = lista_piezas[i]->posicion;
+        Vector2D posicion = lista_piezas[i]->get_posicion();
         if (posicion == a) //Revisamos la posición de todas las piezas
         {
             return true;
@@ -185,7 +186,7 @@ void ListaPiezas::destruir(int i)
             y_fuera_blanca = 1;
         }
         Vector2D fuera_blanca = Vector2D(x_fuera_blanca, y_fuera_blanca);
-        lista_piezas[i]->posicion = fuera_blanca;
+        lista_piezas[i]->set_posicion(fuera_blanca);
         y_fuera_blanca++;
     }
     else
@@ -196,13 +197,14 @@ void ListaPiezas::destruir(int i)
             y_fuera_negra = 1;
         }
         Vector2D fuera_negra = Vector2D(x_fuera_negra, y_fuera_negra);
-        lista_piezas[i]->posicion = fuera_negra;
+        lista_piezas[i]->set_posicion(fuera_negra);
         y_fuera_negra++;
     }
 }
 
 bool ListaPiezas::es_blanca(int i)
 {
+    //if (lista_piezas[i]->blanca == true) 
     if (lista_piezas[i]->get_blanca() == true)
         return true;
     else
@@ -228,7 +230,7 @@ bool ListaPiezas::jaque_mate_total(Pieza* rey, Pieza* pieza)
         for (n = -1; n <= 1; n++)
         {
             Vector2D mn = Vector2D(m, n);
-            Vector2D posible = rey->posicion + mn; //generamos las posiciones posibles a las que se puede mover un rey
+            Vector2D posible = rey->get_posicion() + mn; //generamos las posiciones posibles a las que se puede mover un rey
             if (posible.x > 0 && posible.x < 9 && posible.y>0 && posible.y < 9)//si la casilla generado esta en el tablero
             {
                 if (rey->validar_movimiento(posible, this))//validamos si el rey se puede mover a esa casilla
@@ -245,3 +247,4 @@ bool ListaPiezas::jaque_mate_total(Pieza* rey, Pieza* pieza)
     else
         return false;
 }
+
