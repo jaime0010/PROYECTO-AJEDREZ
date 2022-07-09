@@ -6,7 +6,7 @@ class Alfil : public Pieza //un Alfil es una Pieza
 public:
 
 	//Constructor
-	Alfil(Vector2D pos, float r, bool b);
+	Alfil(Vector2D pos, bool b);
 
 	//Métodos (heredados de la clase Pieza)
 	void dibuja();
