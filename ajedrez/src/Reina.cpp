@@ -2,10 +2,12 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Reina::Reina(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
+
+Reina::Reina(Vector2D pos, bool b) : Pieza(pos, b) //Constructor
 {
 
 }
+
 
 void Reina::dibuja()
 {
