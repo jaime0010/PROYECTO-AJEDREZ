@@ -10,10 +10,10 @@ class Pieza
 {
 protected:
 	bool blanca;
-	//Vector2D posicion; //creo que debe ser protected!!!!
+	Vector2D posicion; //creo que debe ser protected!!!!
 public:
 	//Atributos
-	Vector2D posicion;
+	//Vector2D posicion;
 	float radio;
 
 
