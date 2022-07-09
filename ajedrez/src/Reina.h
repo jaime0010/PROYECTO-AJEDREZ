@@ -6,7 +6,7 @@ class Reina : public Pieza //una Reina es una Pieza
 public:
 
 	//Constructor
-	Reina(Vector2D pos, float r, bool b);
+	Reina(Vector2D pos, bool b);
 
 	//Métodos (heredados de la clase Pieza)
 	void dibuja();
