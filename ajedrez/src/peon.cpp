@@ -46,7 +46,6 @@ void Peon::dibuja()
         glBindTexture(GL_TEXTURE_2D, 0);
         glColor3ub(0,0,0);
         glTranslatef(posicion.x, posicion.y, 0);
-        //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
     else if (blanca == true) //Peones Blancos
@@ -84,7 +83,6 @@ void Peon::dibuja()
         glBindTexture(GL_TEXTURE_2D, 0);
         glColor3ub(255,255,255);
         glTranslatef(posicion.x, posicion.y, 0);
-        //glutSolidSphere(radio, 20, 20);
         glTranslatef(-posicion.x, -posicion.y, 0);
     }
 }
