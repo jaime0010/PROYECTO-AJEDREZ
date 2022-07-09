@@ -18,4 +18,7 @@ bool Pieza::mismo_color(Pieza* otra)
 //void Pieza::dibuja(){}
 //bool Pieza::validar_movimiento(Vector2D a, ListaPiezas* s)
 
-
+bool Pieza::get_blanca()
+{
+	return blanca;
+}
