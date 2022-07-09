@@ -93,6 +93,7 @@ void ListaPiezas::mover(int h)
                 {
                     ETSIDI::play("sonidos/game_over.mp3");
                     cout << endl << "¡Ha ganado el jugador NEGRO!\n";
+                    Sleep(5000);
                     exit(1);
                 }
             }
@@ -110,6 +111,7 @@ void ListaPiezas::mover(int h)
                 {
                     ETSIDI::play("sonidos/game_over.mp3");
                     cout << endl << "¡Ha ganado el jugador BLANCO!\n";
+                    Sleep(5000);
                     exit(1);
                 }
             }
