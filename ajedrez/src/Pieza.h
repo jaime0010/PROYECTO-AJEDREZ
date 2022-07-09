@@ -18,7 +18,7 @@ public:
 
 
 	//Constructor
-	Pieza(Vector2D, float, bool);
+	Pieza(Vector2D, bool);
 
 
 	//Métodos
