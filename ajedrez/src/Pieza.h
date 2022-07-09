@@ -12,11 +12,7 @@ protected:
 	bool blanca;
 	Vector2D posicion; //creo que debe ser protected!!!!
 public:
-	//Atributos
-	//Vector2D posicion;
-	float radio;
-
-
+	
 	//Constructor
 	Pieza(Vector2D, bool);
 
