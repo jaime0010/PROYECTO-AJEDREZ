@@ -22,3 +22,13 @@ bool Pieza::get_blanca()
 {
 	return blanca;
 }
+
+Vector2D Pieza::get_posicion()
+{
+	return posicion;
+}
+
+void Pieza::set_posicion(Vector2D p_fin)
+{
+	posicion = p_fin;
+}
