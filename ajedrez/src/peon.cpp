@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-Peon::Peon(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
+Peon::Peon(Vector2D pos, bool b) : Pieza(pos, b) //Constructor
 {
 
 }
