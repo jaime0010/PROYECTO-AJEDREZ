@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include"ETSIDI.h"
 
-Caballo::Caballo(Vector2D pos, float r, int c) : Pieza(pos, r, c) //Constructor
+Caballo::Caballo(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
 {
 
 }
