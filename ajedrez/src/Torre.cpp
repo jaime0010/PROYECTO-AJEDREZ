@@ -2,7 +2,7 @@
 #include "freeglut.h"
 #include "ETSIDI.h"
 
-Torre::Torre(Vector2D pos, float r, bool b) : Pieza(pos, r, b) //Constructor
+Torre::Torre(Vector2D pos,bool b) : Pieza(pos, b) //Constructor
 {
 
 }
