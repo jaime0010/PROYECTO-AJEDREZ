@@ -203,7 +203,7 @@ void ListaPiezas::destruir(int i)
 
 bool ListaPiezas::es_blanca(int i)
 {
-    if (lista_piezas[i]->color == 255) //Me da error aquí!!!!
+    if (lista_piezas[i]->blanca == true)
         return true;
     else
         return false;
