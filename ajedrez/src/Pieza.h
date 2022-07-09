@@ -28,5 +28,7 @@ public:
 	
 	//Métodos para tener los atributos en PROTECTED/PRIVADO
 	bool get_blanca();
+	Vector2D get_posicion();
+	void set_posicion(Vector2D);
 
 };
