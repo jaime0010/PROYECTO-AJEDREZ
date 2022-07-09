@@ -6,7 +6,7 @@ class Rey : public Pieza //un Rey es una Pieza
 public:
 
 	//Constructor
-	Rey(Vector2D pos, float r, bool b);
+	Rey(Vector2D pos, bool b);
 
 	//Métodos (heredados de la clase Pieza)
 	void dibuja();
