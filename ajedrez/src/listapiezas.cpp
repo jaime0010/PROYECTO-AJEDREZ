@@ -214,9 +214,6 @@ bool ListaPiezas::es_blanca(int i)
 
 }
 
-//Implementados en la propia pieza: peon, torre, alfil, rey, reina, caballo
-//NO borramos estos porque sino NO funciona jaque
-
 bool ListaPiezas::jaque_total(Vector2D pos, Pieza* pieza)
 {
     return (pieza->validar_movimiento(pos, this));
